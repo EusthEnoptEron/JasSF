@@ -3,52 +3,56 @@ package mylib.user;
 import java.lang.String;
 import java.util.Date;
 
-public class User{
-    int userID;
+public class User {
+	int userID;
 
-    String username;
+	String username;
 
-    String password;
+	String password;
 
-    Date dateOfBirth;
-    
-    protected User(int id,String u, String p, Date d){
-	userID = id;
-	username = u;
-	password = p;
-	dateOfBirth = d;
-    }
+	Date dateOfBirth;
 
-    public void setUserID(int userID){
-	this.userID = userID;
-    }
-    public int getUserID(){
-	return userID;
-    }
+	protected User(int id, String u, String p, Date d) {
+		userID = id;
+		username = u;
+		password = p;
+		dateOfBirth = d;
+	}
 
-    public void setUsername(String username){
-	this.username = username;
-    }
-    public String getUsername(){
-	return username;
-    }
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
 
-    public void setPassword(String pwd){
-	this.password = pwd;
-    }
-    public String getPassword(){
-	return password;
-    }
+	public int getUserID() {
+		return userID;
+	}
 
-    public void setDateOfBirth(Date dateOfBirth){
-	this.dateOfBirth = dateOfBirth;
-    }
-    public Date getDateOfBirth(){
-	return dateOfBirth;
-    }
-    
-    public void commitChanges(){
-	UserAccessor.getCurrentInstance().commitUser(this);
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setPassword(String pwd) {
+		this.password = pwd;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void commitChanges() {
+		UserAccessor.getCurrentInstance().commitUser(this);
+	}
 
 }
