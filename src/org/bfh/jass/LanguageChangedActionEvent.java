@@ -1,4 +1,4 @@
-package mylib;
+package org.bfh.jass;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;

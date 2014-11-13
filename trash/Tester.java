@@ -1,4 +1,7 @@
-package mylib.user;
+package org.bfh.jass.user;
+
+import org.bfh.jass.User;
+import org.bfh.jass.UserAccessor;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package mylib.user;
+package org.bfh.jass;
 
 import java.lang.String;
 import java.util.Date;

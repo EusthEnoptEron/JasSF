@@ -10,13 +10,13 @@
 <h:form id="responseform">
 
     <h:commandLink id="fr" value="#{messages.french}" action="hidden">
-        <f:actionListener type="mylib.LanguageChangedActionEvent"/>
+        <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
     </h:commandLink>&nbsp;
     <h:commandLink id="de" value="#{messages.german}" action="hidden">
-        <f:actionListener type="mylib.LanguageChangedActionEvent"/>
+        <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
     </h:commandLink>&nbsp;
     <h:commandLink id="en" value="#{messages.english}" action="hidden">
-        <f:actionListener type="mylib.LanguageChangedActionEvent"/>
+        <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
     </h:commandLink><br/>
     <h:graphicImage id="kuggeliImg" url="#{resource['bfh.jpg']}" alt="BFH logo"/>
 
@@ -30,7 +30,7 @@
     <h:commandButton id="modifyBtn" value="Modify your data"
                      action="modify?faces-redirect=true"/>
     <h:commandButton id="logoutBtn" value="Logout" action="login?faces-redirect=true">
-        <f:actionListener type="mylib.LogoutActionEvent"/>
+        <f:actionListener type="org.bfh.jass.LogoutActionEvent"/>
     </h:commandButton>
 
 </h:form>

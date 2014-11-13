@@ -1,9 +1,8 @@
-package mylib.user;
+package org.bfh.jass;
 
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Date;
-import java.text.DateFormat;
 import java.sql.*;
 
 /*
@@ -29,10 +28,11 @@ public class UserAccessor {
 		conn = null;
 
 		try {
-			String userName = "root";
-			String password = "";
-			String url = "jdbc:mysql://localhost/jsf2_user";
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			DAOProperties props = new DAOProperties("db.mysql");
+			String userName = props.getProperty("username", true);
+			String password = props.getProperty("password", false);
+			String url = props.getProperty("url", true);
+			Class.forName(props.getProperty("driver", true)).newInstance();
 			conn = DriverManager.getConnection(url, userName, password);
 			System.out.println("Database connection established");
 		} catch (Exception e) {

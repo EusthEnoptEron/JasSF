@@ -13,13 +13,13 @@
     <h:form id="helloForm">
 
         <h:commandLink id="fr" value="#{messages.french}" action="register">
-            <f:actionListener type="mylib.LanguageChangedActionEvent"/>
+            <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
         </h:commandLink>&nbsp;
         <h:commandLink id="de" value="#{messages.german}" action="register">
-            <f:actionListener type="mylib.LanguageChangedActionEvent"/>
+            <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
         </h:commandLink>&nbsp;
         <h:commandLink id="en" value="#{messages.english}" action="register">
-            <f:actionListener type="mylib.LanguageChangedActionEvent"/>
+            <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
         </h:commandLink><br/>
 
         <h:graphicImage id="kuggeliImg" url="#{resource['bfh.jpg']}" alt="BFH logo"/>

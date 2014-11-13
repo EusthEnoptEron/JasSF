@@ -1,11 +1,10 @@
-package mylib;
+package org.bfh.jass;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import javax.faces.event.AbortProcessingException;
 //import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import java.util.Locale;
 import javax.servlet.http.HttpSession;
 
 public class LogoutActionEvent implements ActionListener {

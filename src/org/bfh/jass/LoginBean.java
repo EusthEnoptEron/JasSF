@@ -6,13 +6,11 @@
  */
 
 
-package mylib;
+package org.bfh.jass;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
-import mylib.user.User;
-import mylib.user.UserAccessor;
 import java.util.Date;
 import javax.faces.context.FacesContext;
 
