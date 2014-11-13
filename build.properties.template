@@ -16,7 +16,7 @@
 # PC:  catalina.home=P:\\Jakarta-Tomcat-4.1.18
 # catalina.home=/home/bie1/applications/apache-tomcat-6.0.14
 #catalina.home=/Users/bie1/applications/apache-tomcat-6.0.20
-catalina.home=E:/Applications/Apache Software Foundation/Apache Tomcat 8.0.9
+catalina.home=E:/Applications/apache-tomcat-8.0.15
 # catalina.base: The directory for a personal instance of Tomcat.
 #                If not using shared installation, personal
 #                instance of Tomcat then set the same value as
@@ -25,5 +25,5 @@ catalina.home=E:/Applications/Apache Software Foundation/Apache Tomcat 8.0.9
 # PC  for example: catalina.base=F:/\tomcat
 # catalina.base=/home/bie1/applications/apache-tomcat-6.0.14
 #catalina.base=/Users/bie1/applications/apache-tomcat-6.0.20
-catalina.base=E:/Applications/Apache Software Foundation/Apache Tomcat 8.0.9
+catalina.base=E:/Applications/apache-tomcat-8.0.15
 ## end of file
