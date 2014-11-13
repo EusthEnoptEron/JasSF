@@ -3,6 +3,20 @@ JasSF
 
 Jass webapp made with JSF.
 
+## Install
+
+1. Clone repo (`git clone https://github.com/EusthEnoptEron/JasSF.git`)
+2. Create `build.properties` (there's a template)
+3. Create a database and run `database.sql` against it.
+4. Adjust `src/database.properties` to reflect your credentials.
+
+## Usage
+
+1. Start up Tomcat.
+2. Start up MySQL (or MariaDB).
+3. Run `ant deploy`.
+4. Go to http://localhost:8080/JasSF
+
 ## Resources
 
 - [Course website] (http://www.benoist.ch/coursAWT/)
