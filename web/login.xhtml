@@ -2,38 +2,42 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html">
 <f:view contentType="text/html" locale="#{loginBean.locale}"/>
-<f:loadBundle basename="mylib.Messages" var="messages"/>
 
 <h:head>
     <title>#{messages.loginTitle}</title>
 </h:head>
-<h:body bgcolor="white">
-    <h:form id="helloForm">
-        <h:commandLink id="fr" value="#{messages.french}" action="login">
-            <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
-        </h:commandLink>&nbsp;
-        <h:commandLink id="de" value="#{messages.german}" action="login">
-            <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
-        </h:commandLink>&nbsp;
-        <h:commandLink id="en" value="#{messages.english}" action="login">
-            <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
-        </h:commandLink><br/>
+<h:body>
+    <ui:composition template="/template/layout.xhtml">
+        <ui:define name="content">
+            <h:form id="helloForm">
+                <h:commandLink id="fr" value="#{messages.french}" action="login">
+                    <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
+                </h:commandLink>&nbsp;
+                <h:commandLink id="de" value="#{messages.german}" action="login">
+                    <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
+                </h:commandLink>&nbsp;
+                <h:commandLink id="en" value="#{messages.english}" action="login">
+                    <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
+                </h:commandLink><br/>
 
-        <h:graphicImage id="kuggeliImg" url="#{resource['bfh.jpg']}" alt="BFH logo"/>
+                <h:graphicImage id="kuggeliImg" url="#{resource['bfh.jpg']}" alt="BFH logo"/>
 
-        <h2>#{messages.loginGreetings}</h2>
+                <h2>#{messages.loginGreetings}</h2>
 
 
-        #{messages.loginUsername}: <h:inputText id="username"
-                                                value="#{loginBean.name}"/><br/>
-        #{messages.loginPassword}: <h:inputSecret id="password"
-                                                  value="#{loginBean.password}"/><br/>
-        <h:commandButton id="submitBtn" action="#{loginBean.login}"
-                         value="#{messages.loginSubmit}"/>
-        <br/>
-        <h:commandLink id="registerLnk" action="register" value="#{messages.loginRegister}"/><br/>
-    </h:form>
+                #{messages.loginUsername}: <h:inputText id="username"
+                                                        value="#{loginBean.name}"/><br/>
+                #{messages.loginPassword}: <h:inputSecret id="password"
+                                                          value="#{loginBean.password}"/><br/>
+                <h:commandButton id="submitBtn" action="#{loginBean.login}"
+                                 value="#{messages.loginSubmit}"/>
+                <br/>
+                <h:commandLink id="registerLnk" action="register" value="#{messages.loginRegister}"/><br/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>
