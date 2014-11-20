@@ -1,4 +1,6 @@
-package org.bfh.jass;
+package org.bfh.jass.user;
+
+import org.bfh.jass.user.LoginBean;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;

@@ -6,7 +6,7 @@
  */
 
 
-package org.bfh.jass;
+package org.bfh.jass.user;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;

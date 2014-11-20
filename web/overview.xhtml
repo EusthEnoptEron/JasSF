@@ -1,0 +1,33 @@
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <title>#{messages.loginTitle}</title>
+</h:head>
+<ui:composition template="/template/layout.xhtml">
+    <ui:define name="content">
+        <h:form id="helloForm">
+
+        <h2>Game Overview</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Players</th>
+                    <th>Name</th>
+                    <th>Creator</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${gameListBean.games}" var="game">
+                    <tr>
+                        <td>1/4</td>
+                        <td>#{game.name}</td>
+                        <td>#{game.creatorName}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

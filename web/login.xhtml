@@ -5,22 +5,20 @@
 <h:head>
     <title>#{messages.loginTitle}</title>
 </h:head>
-<h:body>
-    <ui:composition template="/template/layout.xhtml">
-        <ui:define name="content">
-            <h:form id="helloForm">
-                <h2>#{messages.loginGreetings}</h2>
+<ui:composition template="/template/layout.xhtml">
+    <ui:define name="content">
+        <h:form id="helloForm">
+            <h2>#{messages.loginGreetings}</h2>
 
-                #{messages.loginUsername}: <h:inputText id="username"
-                                                        value="#{loginBean.name}"/><br/>
-                #{messages.loginPassword}: <h:inputSecret id="password"
-                                                          value="#{loginBean.password}"/><br/>
-                <h:commandButton id="submitBtn" action="#{loginBean.login}"
-                                 value="#{messages.loginSubmit}"/>
-                <br/>
-                <h:commandLink id="registerLnk" action="register" value="#{messages.loginRegister}"/><br/>
-            </h:form>
-        </ui:define>
-    </ui:composition>
-</h:body>
+            #{messages.loginUsername}: <h:inputText id="username"
+                                                    value="#{loginBean.name}"/><br/>
+            #{messages.loginPassword}: <h:inputSecret id="password"
+                                                      value="#{loginBean.password}"/><br/>
+            <h:commandButton id="submitBtn" action="#{loginBean.login}"
+                             value="#{messages.loginSubmit}"/>
+            <br/>
+            <h:commandLink id="registerLnk" action="register" value="#{messages.loginRegister}"/><br/>
+        </h:form>
+    </ui:define>
+</ui:composition>
 </html>

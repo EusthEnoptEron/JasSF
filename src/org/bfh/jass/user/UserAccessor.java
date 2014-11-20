@@ -1,4 +1,7 @@
-package org.bfh.jass;
+package org.bfh.jass.user;
+
+import org.bfh.jass.DAOProperties;
+import org.bfh.jass.DatabaseManager;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -25,20 +28,7 @@ public class UserAccessor {
 	Map<String, User> userMap;
 
 	private UserAccessor() {
-		conn = null;
-
-		try {
-			DAOProperties props = new DAOProperties("db.mysql");
-			String userName = props.getProperty("username", true);
-			String password = props.getProperty("password", false);
-			String url = props.getProperty("url", true);
-			Class.forName(props.getProperty("driver", true)).newInstance();
-			conn = DriverManager.getConnection(url, userName, password);
-			System.out.println("Database connection established");
-		} catch (Exception e) {
-			System.err.println("Cannot connect to database server" + e.toString());
-		}
-
+		conn = DatabaseManager.getConnection();
 		userMap = new HashMap<String, User>();
 	}
 
@@ -76,7 +66,7 @@ public class UserAccessor {
 				PreparedStatement s;
 
 
-				String sql = "INSERT INTO `user` (`id` ,`username` ,`password` ,`dateofbirth` )VALUES (NULL , ?, ?, ?)";
+				String sql = "INSERT INTO `user` (`id` ,`username` ,`password` ,`dateofbirth` ) VALUES (NULL , ?, ?, ?)";
 				//String sql = "INSERT INTO `user` (`id` ,`username` ,`password` )VALUES (NULL , ?, ?)";
 
 				s = conn.prepareStatement(sql);
@@ -144,4 +134,29 @@ public class UserAccessor {
 	}
 
 
+	public User getUser(int id) {
+		try {
+			PreparedStatement s = conn.prepareStatement(
+				"SELECT id, username, password, dateOfBirth FROM user where id=?"
+			);
+			s.setInt(1, id);
+
+			ResultSet rs = s.executeQuery();
+			int count = 0;
+			User res = null;
+			while (rs.next()) {
+				String username = rs.getString("username");
+				String password = rs.getString("password");
+				Date dateOfBirth = rs.getDate("dateOfBirth");
+				res = new User(id, username, password, dateOfBirth);
+
+			}
+			rs.close();
+			s.close();
+			return res;
+		} catch(SQLException e) {
+			return null;
+		}
+
+	}
 }
