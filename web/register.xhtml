@@ -1,41 +1,29 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:t="http://myfaces.apache.org/tomahawk">
-<f:view contentType="text/html" locale="#{loginBean.locale}"/>
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
     <title>#{messages.registerTitle}</title>
 </h:head>
 <h:body bgcolor="white">
-    <h:form id="helloForm">
+    <ui:composition template="/template/layout.xhtml">
+        <ui:define name="content">
+            <h:form id="helloForm">
+                <h2>#{messages.registerGreetings}</h2>
 
-        <h:commandLink id="fr" value="#{messages.french}" action="register">
-            <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
-        </h:commandLink>&nbsp;
-        <h:commandLink id="de" value="#{messages.german}" action="register">
-            <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
-        </h:commandLink>&nbsp;
-        <h:commandLink id="en" value="#{messages.english}" action="register">
-            <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
-        </h:commandLink><br/>
+                #{messages.registerUsername}: <h:inputText id="username"
+                                                           value="#{loginBean.name}"/><br/>
+                #{messages.registerPassword}: <h:inputText id="password"
+                                                           value="#{loginBean.password}"/><br/>
 
-        <h:graphicImage id="kuggeliImg" url="#{resource['bfh.jpg']}" alt="BFH logo"/>
-
-        <h2>#{messages.registerGreetings}</h2>
-
-        #{messages.registerUsername}: <h:inputText id="username"
-                                                   value="#{loginBean.name}"/><br/>
-        #{messages.registerPassword}: <h:inputText id="password"
-                                                   value="#{loginBean.password}"/><br/>
-
-        #{messages.registerDate}: <t:inputDate id="date"
-                                               value="#{loginBean.dateOfBirth}" popupCalendar="true"/><br/>
-        <h:commandButton id="submit" action="#{loginBean.register}"
-                         value="#{messages.registerValidate}"/>
-        <br/>
-        <h:commandLink id="login" action="login" value="#{messages.registerBack}"/><br/>
-    </h:form>
+                #{messages.registerDate}: <t:inputDate id="date"
+                                                       value="#{loginBean.dateOfBirth}" popupCalendar="true"/><br/>
+                <h:commandButton id="submit" action="#{loginBean.register}"
+                                 value="#{messages.registerValidate}"/>
+                <br/>
+                <h:commandLink id="login" action="login" value="#{messages.registerBack}"/><br/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>

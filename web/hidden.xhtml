@@ -1,37 +1,28 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
-<f:view contentType="text/html; charset=iso-8859-1" locale="#{loginBean.locale}"/>
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+
 <head><title>#{messages.hiddenTitle}</title></head>
-<body>
-<h:form id="responseform">
+<h:body>
+<ui:composition template="/template/layout.xhtml">
+    <ui:define name="content">
+        <h:form id="responseform">
+            <h2>#{messages.hiddenGreeting} #{loginBean.name}</h2>
 
-    <h:commandLink id="fr" value="#{messages.french}" action="hidden">
-        <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
-    </h:commandLink>&nbsp;
-    <h:commandLink id="de" value="#{messages.german}" action="hidden">
-        <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
-    </h:commandLink>&nbsp;
-    <h:commandLink id="en" value="#{messages.english}" action="hidden">
-        <f:actionListener type="org.bfh.jass.LanguageChangedActionEvent"/>
-    </h:commandLink><br/>
-    <h:graphicImage id="kuggeliImg" url="#{resource['bfh.jpg']}" alt="BFH logo"/>
+            <h:outputFormat value="#{messages.hiddenPassword}">
+                <f:param value="#{loginBean.password}"/>
+            </h:outputFormat> <br/>
+            <h:outputFormat value="#{messages.hiddenBirthDate}">
+                <f:param value="#{loginBean.dateOfBirth}"/>
+            </h:outputFormat> <br/>
+            <h:commandButton id="modifyBtn" value="Modify your data"
+                             action="modify?faces-redirect=true"/>
+            <h:commandButton id="logoutBtn" value="Logout" action="login?faces-redirect=true">
+                <f:actionListener type="org.bfh.jass.LogoutActionEvent"/>
+            </h:commandButton>
 
-    <h2>#{messages.hiddenGreeting} #{loginBean.name}</h2>
-    <h:outputFormat value="#{messages.hiddenPassword}">
-        <f:param value="#{loginBean.password}"/>
-    </h:outputFormat> <br/>
-    <h:outputFormat value="#{messages.hiddenBirthDate}">
-        <f:param value="#{loginBean.dateOfBirth}"/>
-    </h:outputFormat> <br/>
-    <h:commandButton id="modifyBtn" value="Modify your data"
-                     action="modify?faces-redirect=true"/>
-    <h:commandButton id="logoutBtn" value="Logout" action="login?faces-redirect=true">
-        <f:actionListener type="org.bfh.jass.LogoutActionEvent"/>
-    </h:commandButton>
-
-</h:form>
-</body>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</h:body>
 </html>
