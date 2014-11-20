@@ -15,7 +15,7 @@ Jass webapp made with JSF.
 1. Start up Tomcat.
 2. Start up MySQL (or MariaDB).
 3. Run `ant deploy`.
-4. Go to http://localhost:8080/JasSF
+4. Go to [http://localhost:8080/JasSF](http://localhost:8080/JasSF)
 
 ## Resources
 
