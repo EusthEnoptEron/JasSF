@@ -7,7 +7,7 @@ Jass webapp made with JSF.
 
 1. Clone repo (`git clone https://github.com/EusthEnoptEron/JasSF.git`)
 2. Create `build.properties` (there's a template)
-3. Create a database and run `database.sql` against it.
+3. Run `database.sql` on your MySQL server.
 4. Adjust `src/database.properties` to reflect your credentials.
 
 ## Usage
