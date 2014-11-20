@@ -7,7 +7,7 @@ import java.sql.*;
 
 /*
 TO DO: Change the insert method for accessing the date.
-Must update the userID.
+Must update the id.
 
 Remove the Tester  and the Connect classes
 
@@ -76,8 +76,8 @@ public class UserAccessor {
 				PreparedStatement s;
 
 
-				String sql = "INSERT INTO `user` (`userID` ,`username` ,`password` ,`dateofbirth` )VALUES (NULL , ?, ?, ?)";
-				//String sql = "INSERT INTO `user` (`userID` ,`username` ,`password` )VALUES (NULL , ?, ?)";
+				String sql = "INSERT INTO `user` (`id` ,`username` ,`password` ,`dateofbirth` )VALUES (NULL , ?, ?, ?)";
+				//String sql = "INSERT INTO `user` (`id` ,`username` ,`password` )VALUES (NULL , ?, ?)";
 
 				s = conn.prepareStatement(sql);
 				s.setString(1, username);
@@ -103,7 +103,7 @@ public class UserAccessor {
 		try {
 			int count;
 			PreparedStatement s;
-			String sql = "UPDATE `user` SET `username` = ?,`password` = ?,`dateOfBirth` = ? WHERE `user`.`userID` =? LIMIT 1 ;";
+			String sql = "UPDATE `user` SET `username` = ?,`password` = ?,`dateOfBirth` = ? WHERE `user`.`id` =? LIMIT 1 ;";
 			s = conn.prepareStatement(sql);
 			s.setString(1, user.getUsername());
 			s.setString(2, user.getPassword());
@@ -120,12 +120,12 @@ public class UserAccessor {
 
 	private User accessUser(String username) throws SQLException {
 		Statement s = conn.createStatement();
-		s.executeQuery("SELECT userID, username, password, dateOfBirth FROM user where username='" + username + "'");
+		s.executeQuery("SELECT id, username, password, dateOfBirth FROM user where username='" + username + "'");
 		ResultSet rs = s.getResultSet();
 		int count = 0;
 		User res = null;
 		while (rs.next()) {
-			int userID = rs.getInt("userID");
+			int userID = rs.getInt("id");
 			String username2 = rs.getString("username");
 			String password = rs.getString("password");
 			Date dateOfBirth = rs.getDate("dateOfBirth");
