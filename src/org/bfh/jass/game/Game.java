@@ -10,10 +10,17 @@ import java.util.Hashtable;
  * Created by Simon on 2014/11/27.
  */
 public class Game implements Serializable {
+	public enum GameState {
+		CONFIGURING,
+		WAITING,
+		PLAYING,
+		CLOSING
+	}
+
 	private int score;
 	private boolean started = false;
 	private CardSuit trump;
-	private GameRound match;
+	private GameRound round;
 
 	Dictionary<Team, Integer> scores;
 
@@ -21,6 +28,8 @@ public class Game implements Serializable {
 		scores = new Hashtable<Team, Integer>();
 		scores.put(Team.EVEN, 0);
 		scores.put(Team.ODD, 0);
+
+		state = GameState.CONFIGURING;
 	}
 
 	public int getPlayerTurn() {
@@ -65,7 +74,17 @@ public class Game implements Serializable {
 	}
 
 	public void startNewRound() {
-		match = new GameRound(0);
+		round = null;
+
+		if(scores.get(Team.EVEN) >= score ||
+				scores.get(Team.ODD) >= score) {
+			state = GameState.CLOSING;
+			// TODO: Select winner
+
+		} else {
+			state = GameState.PLAYING;
+			round = new GameRound(0);
+		}
 	}
 
 	public enum Team {
@@ -76,11 +95,6 @@ public class Game implements Serializable {
 	private GameState state;
 
 	private User[] players = new User[4];
-
-	public void evaluate(GameAction action) {
-		state.evaluate(action);
-	}
-
 
 	public User[] getPlayers() {
 		return players;
@@ -101,15 +115,6 @@ public class Game implements Serializable {
 
 	public GameState getState() {
 		return state;
-	}
-
-	void changeState(GameState newSate) {
-		if(state != null)
-			state.onExit();
-
-		state = newSate;
-
-		state.onEnter();
 	}
 
 	public void setScore(int score) {

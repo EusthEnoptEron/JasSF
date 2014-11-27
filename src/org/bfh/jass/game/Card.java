@@ -100,6 +100,8 @@ public class Card {
 				case JOKER: return 17;
 			}
 		}
+
+		return 0;
 	}
 
 	@Override
