@@ -1,7 +1,11 @@
 package org.bfh.jass.user;
 
+import org.bfh.jass.game.Card;
+
 import java.lang.String;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class User {
 	int id;
@@ -11,6 +15,7 @@ public class User {
 	String password;
 
 	Date dateOfBirth;
+	private Set<Card> cards = new HashSet<Card>();
 
 	protected User(int id, String u, String p, Date d) {
 		this.id = id;
@@ -55,4 +60,20 @@ public class User {
 		UserAccessor.getCurrentInstance().commitUser(this);
 	}
 
+
+	public void setCards(Card[] cards) {
+		this.cards.clear();
+		for(Card card: cards) {
+			this.cards.add(card);
+		}
+
+	}
+
+	public Card[] getCards() {
+		return cards.toArray(new Card[cards.size()]);
+	}
+
+	public boolean hasCard(Card card) {
+		return cards.contains(card);
+	}
 }
