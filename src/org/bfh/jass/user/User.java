@@ -1,6 +1,7 @@
 package org.bfh.jass.user;
 
 import org.bfh.jass.game.Card;
+import org.bfh.jass.game.Game;
 
 import java.lang.String;
 import java.util.Date;
@@ -16,6 +17,7 @@ public class User {
 
 	Date dateOfBirth;
 	private Set<Card> cards = new HashSet<Card>();
+	private Game.Team team;
 
 	protected User(int id, String u, String p, Date d) {
 		this.id = id;
@@ -75,5 +77,17 @@ public class User {
 
 	public boolean hasCard(Card card) {
 		return cards.contains(card);
+	}
+
+	public void removeCard(Card card) {
+		cards.remove(card);
+	}
+
+	public Game.Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Game.Team team) {
+		this.team = team;
 	}
 }
