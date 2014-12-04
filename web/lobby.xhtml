@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" >
+
+<h:head>
+    <title>#{messages.loginTitle}</title>
+</h:head>
+<ui:composition template="/template/layout.xhtml">
+    <ui:define name="content">
+        <h:form id="lobbyForm">
+            <h2>#{gameBean.title}</h2>
+
+            <p:panelGrid>
+                <p:row>
+                    <p:column colspan="2">Team Even</p:column>
+                </p:row>
+                <p:row>
+                    <p:column>1</p:column>
+                    <p:column>
+                        
+                    </p:column>
+                </p:row>
+
+            </p:panelGrid>
+
+            <p:poll interval="1" update="lobbyForm" listener="#{gameBean.checkForStart}" />
+            <c:if test="#{gameBean.creator}">
+                <h:commandLink action="#{gameBean.checkForStart}" />
+            </c:if>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

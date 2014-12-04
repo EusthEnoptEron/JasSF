@@ -35,22 +35,19 @@ public class GameManager {
 
 	public Game getCurrentGame(User user) {
 		for(Game game: games) {
-			if(Arrays.asList(game.getPlayers()).contains(user)) {
-				return game;
+			for(Player player: game.getPlayers()) {
+				if(player instanceof HumanPlayer) {
+					if(user.getUserID() == ((HumanPlayer)player).getUserId()) {
+						return game;
+					}
+				}
 			}
 		}
 		return null;
 	}
 
-	@Deprecated
-	public Game createGame(User creator) {
-		Game game = new Game(creator);
-		games.add(game);
-
-		return game;
-	}
-
 	public void addGame(Game game) {
 		games.add(game);
+		game.create();
 	}
 }

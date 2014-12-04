@@ -49,7 +49,14 @@ public class GameBean implements Serializable {
 		}
 	}
 
-	public boolean IsCreator() {
+	public String getTitle() {
+		return game.getTitle();
+	}
+	public void setTitle(String title) {
+		game.setTitle(title);
+	}
+
+	public boolean isCreator() {
 		return game.getCreator() == user.getUser();
 	}
 
@@ -73,5 +80,13 @@ public class GameBean implements Serializable {
 		GameManager.getInstance().addGame(game);
 
 		return "lobby?faces-redirect=true";
+	}
+
+	public void start() {
+		game.start();
+	}
+
+	public void checkForStart() {
+
 	}
 }

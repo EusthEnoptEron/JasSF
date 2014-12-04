@@ -11,6 +11,24 @@ import java.util.Hashtable;
  * Created by Simon on 2014/11/27.
  */
 public class Game implements Serializable {
+	Dictionary<Team, Integer> scores;
+	private int score;
+	private boolean started = false;
+	private CardSuit trump;
+	private GameRound round;
+	private GameState state;
+	private Player[] players = new Player[4];
+	private User creator;
+	private String title;
+
+	public Game(User creator) {
+		scores = new Hashtable<Team, Integer>();
+		scores.put(Team.EVEN, 0);
+		scores.put(Team.ODD, 0);
+		this.creator = creator;
+		state = GameState.CONFIGURING;
+	}
+
 	public User getCreator() {
 		return creator;
 	}
@@ -24,44 +42,25 @@ public class Game implements Serializable {
 		return ArrayUtils.indexOf(players, player);
 	}
 
-	public enum GameState {
-		CONFIGURING,
-		WAITING,
-		PLAYING,
-		CLOSING
-	}
-
-	private int score;
-	private boolean started = false;
-	private CardSuit trump;
-	private GameRound round;
-	public enum Team {
-		EVEN,
-		ODD
-	}
-
-	private GameState state;
-
-	private Player[] players = new Player[4];
-
-
-	private User creator;
-
-	Dictionary<Team, Integer> scores;
-
-	public Game(User creator) {
-		scores = new Hashtable<Team, Integer>();
-		scores.put(Team.EVEN, 0);
-		scores.put(Team.ODD, 0);
-		this.creator = creator;
-		state = GameState.CONFIGURING;
+	public void create() {
+		state = GameState.WAITING;
 	}
 
 	public void start() {
-		started = true;
+		if(!hasStarted()) {
+			// Fill empty slots with computer players
+			for(int i = 0; i < players.length; i++) {
+				if(players[i] == null)
+					players[i] = new ComputerPlayer(this);
+			}
+
+			this.state = GameState.PLAYING;
+			startNewRound();
+		}
 	}
+
 	public boolean hasStarted() {
-		return started;
+		return state.ordinal() >= GameState.PLAYING.ordinal();
 	}
 
 	public boolean isFull() {
@@ -71,12 +70,12 @@ public class Game implements Serializable {
 		return true;
 	}
 
-	public void setTrump(CardSuit trump) {
-		this.trump = trump;
-	}
-
 	public CardSuit getTrump() {
 		return trump;
+	}
+
+	public void setTrump(CardSuit trump) {
+		this.trump = trump;
 	}
 
 	public void addScore(Team team, int score) {
@@ -87,7 +86,7 @@ public class Game implements Serializable {
 		return round;
 	}
 
-	public void startNewRound() {
+	void startNewRound() {
 		round = null;
 
 		if(scores.get(Team.EVEN) >= score ||
@@ -100,6 +99,7 @@ public class Game implements Serializable {
 			round = new GameRound(0);
 		}
 	}
+
 	public Player[] getPlayers() {
 		return players;
 	}
@@ -121,12 +121,33 @@ public class Game implements Serializable {
 		return state;
 	}
 
+	public int getScore() {
+		return score;
+	}
+
 	public void setScore(int score) {
 		this.score = score;
 	}
 
-	public int getScore() {
-		return score;
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+
+	public enum GameState {
+		CONFIGURING,
+		WAITING,
+		PLAYING,
+		CLOSING
+	}
+
+	public enum Team {
+		EVEN,
+		ODD
 	}
 
 }
