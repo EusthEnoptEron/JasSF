@@ -8,6 +8,7 @@ import java.util.*;
  * Created by Simon on 2014/11/27.
  */
 public class GameRound {
+
 	public enum GameRoundState {
 		PICKING,
 		PLAYING
@@ -18,7 +19,9 @@ public class GameRound {
 	private int playerTurn = 0;
 	private Game game;
 	private CardSuit trump;
-	private Dictionary<Integer, Card> cards = new Hashtable<Integer, Card>();
+
+	// Linked to preserve insertion order.
+	private LinkedHashMap<Player, Card> cards = new LinkedHashMap<Player, Card>();
 	private int step = 1;
 
 	GameRoundState state;
@@ -29,47 +32,55 @@ public class GameRound {
 
 		// Distribute cards
 		CardDeck deck = new CardDeck();
-		for(User player: game.getPlayers()) {
+		for(Player player: game.getPlayers()) {
 			player.setCards(deck.draw(9));
 		}
 	}
 
-	public User getCurrentPlayer() {
+	public Player getCurrentPlayer() {
 		return game.getPlayers()[playerTurn];
 	}
 
-	public void pickTrump(User user, CardSuit trump) {
+	public void pickTrump(Player player, CardSuit trump) {
 		if(state == GameRoundState.PICKING) {
-			if (getCurrentPlayer().getUserID() == user.getUserID()) {
+			if (player == getCurrentPlayer()) {
 				this.trump = trump;
 				state = GameRoundState.PLAYING;
 			}
 		}
 	}
-	public void playCard(User user, Card card) {
+
+	public Card[] getPlayedCards() {
+		return (Card[]) this.cards.values().toArray();
+	}
+
+	public void playCard(Player player, Card card) {
 		if(state == GameRoundState.PLAYING) {
-			if (getCurrentPlayer().getUserID() == user.getUserID()) {
-				cards.put(playerTurn, card);
-				user.removeCard(card);
+			if (player == getCurrentPlayer()) {
+				cards.put(player, card);
+				player.removeCard(card);
 
 				if (cards.size() == 4) {
 					showdown();
 				} else {
-					playerTurn = (playerTurn + 1) % 4;
+					goToNextPlayer();
 				}
 			}
 		}
 	}
 
+	private void goToNextPlayer() {
+		int nextTurn = (playerTurn + 1) % 4;
+		setCurrentPlayer(game.getPlayers()[nextTurn]);
+	}
+
 	private void showdown() {
 		Card winningCard = null;
-		int winningPlayer = 0;
+		Player winningPlayer = null;
 		int score = 0;
 
 		// Select winner
-		Enumeration<Integer> keys = cards.keys();
-		while(keys.hasMoreElements()) {
-			int player = keys.nextElement();
+		for(Player player: cards.keySet()) {
 			Card card = cards.get(player);
 			if(winningCard == null
 					|| card.getSortOrder(trump) > winningCard.getSortOrder(trump)) {
@@ -80,16 +91,22 @@ public class GameRound {
 		}
 
 		// TODO: player.setWonCards
-		game.addScore(game.getPlayers()[winningPlayer].getTeam(), score);
+		game.addScore(winningPlayer.getTeam(), score);
 
 		if(step < MAX_STEPS) {
-			playerTurn = winningPlayer;
-			cards = new Hashtable();
+			cards = new LinkedHashMap<Player, Card>();
 			step++;
+
+			setCurrentPlayer(winningPlayer);
 		} else {
 			// Match's over
 			game.startNewRound();
 		}
+	}
+
+	private void setCurrentPlayer(Player winningPlayer) {
+		playerTurn = winningPlayer.getSlot();
+		winningPlayer.react();
 	}
 
 

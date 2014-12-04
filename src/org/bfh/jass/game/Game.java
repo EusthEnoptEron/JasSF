@@ -1,5 +1,6 @@
 package org.bfh.jass.game;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.bfh.jass.user.User;
 
 import java.io.Serializable;
@@ -10,6 +11,19 @@ import java.util.Hashtable;
  * Created by Simon on 2014/11/27.
  */
 public class Game implements Serializable {
+	public User getCreator() {
+		return creator;
+	}
+
+	/**
+	 * Finds the slot number of a player.
+	 * @param player
+	 * @return the slot number of the player or ArrayUtils.INDEX_NOT_FOUND (-1).
+	 */
+	public int getPlayerSlot(Player player) {
+		return ArrayUtils.indexOf(players, player);
+	}
+
 	public enum GameState {
 		CONFIGURING,
 		WAITING,
@@ -21,6 +35,17 @@ public class Game implements Serializable {
 	private boolean started = false;
 	private CardSuit trump;
 	private GameRound round;
+	public enum Team {
+		EVEN,
+		ODD
+	}
+
+	private GameState state;
+
+	private Player[] players = new Player[4];
+
+
+	private User creator;
 
 	Dictionary<Team, Integer> scores;
 
@@ -28,20 +53,9 @@ public class Game implements Serializable {
 		scores = new Hashtable<Team, Integer>();
 		scores.put(Team.EVEN, 0);
 		scores.put(Team.ODD, 0);
-
+		this.creator = creator;
 		state = GameState.CONFIGURING;
 	}
-
-	public int getPlayerTurn() {
-		return playerTurn;
-	}
-
-	public void setPlayerTurn(int player) {
-		playerTurn = player;
-	}
-
-	private int playerTurn;
-
 
 	public void start() {
 		started = true;
@@ -51,7 +65,7 @@ public class Game implements Serializable {
 	}
 
 	public boolean isFull() {
-		for(User u: players) {
+		for(Player u: players) {
 			if(u == null) return false;
 		}
 		return true;
@@ -65,12 +79,12 @@ public class Game implements Serializable {
 		return trump;
 	}
 
-	public User getCurrentPlayer() {
-		return players[playerTurn];
-	}
-
 	public void addScore(Team team, int score) {
 		scores.put(team, scores.get(team) + score);
+	}
+
+	public GameRound getRound() {
+		return round;
 	}
 
 	public void startNewRound() {
@@ -86,17 +100,7 @@ public class Game implements Serializable {
 			round = new GameRound(0);
 		}
 	}
-
-	public enum Team {
-		EVEN,
-		ODD
-	}
-
-	private GameState state;
-
-	private User[] players = new User[4];
-
-	public User[] getPlayers() {
+	public Player[] getPlayers() {
 		return players;
 	}
 
@@ -109,7 +113,7 @@ public class Game implements Serializable {
 
 	public void setPlayer(int slot, User player) {
 		if(isFree(slot)) {
-			players[slot] = player;
+			players[slot] = new HumanPlayer(this, player);
 		}
 	}
 
