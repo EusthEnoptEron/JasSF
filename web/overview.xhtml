@@ -18,11 +18,13 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${gameListBean.games}" var="game">
+                <c:forEach items="#{gameListBean.games}" var="game">
                     <tr>
                         <td>1/4</td>
-                        <td>#{game.name}</td>
-                        <td>#{game.creatorName}</td>
+                        <td>
+                            <h:commandLink value="#{game.title}" action="#{gameBean.join(game)}" />
+                        </td>
+                        <td>#{game.creator.username}</td>
                     </tr>
                 </c:forEach>
             </tbody>

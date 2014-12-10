@@ -50,4 +50,14 @@ public class GameManager {
 		games.add(game);
 		game.create();
 	}
+
+	public Game[] getOpenGames() {
+		List<Game> list = new ArrayList<Game>();
+		for (Game game : games) {
+			if(game.getState() == Game.GameState.WAITING) {
+				list.add(game);
+			}
+		}
+		return list.toArray(new Game[list.size()]);
+	}
 }

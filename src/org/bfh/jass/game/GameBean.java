@@ -82,11 +82,22 @@ public class GameBean implements Serializable {
 		return "lobby?faces-redirect=true";
 	}
 
-	public void start() {
+	public String start() {
 		game.start();
+
+		return "game?faces-redirect=true";
 	}
 
 	public void checkForStart() {
+		if(game.isFull()) {
+			game.start();
+			// TODO: redirect
+		}
+	}
 
+	public String join(Game game) {
+		this.game = game;
+
+		return "lobby?faces-redirect=true";
 	}
 }

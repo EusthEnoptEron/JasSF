@@ -27,7 +27,7 @@
 
             <p:poll interval="1" update="lobbyForm" listener="#{gameBean.checkForStart}" />
             <c:if test="#{gameBean.creator}">
-                <h:commandLink action="#{gameBean.checkForStart}" />
+                <h:commandLink action="#{gameBean.start}" value="Start Game" />
             </c:if>
         </h:form>
     </ui:define>
