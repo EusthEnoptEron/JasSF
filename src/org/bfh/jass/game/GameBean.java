@@ -50,6 +50,7 @@ public class GameBean implements Serializable {
 	}
 
 	public String getTitle() {
+		if(game == null) return "";
 		return game.getTitle();
 	}
 	public void setTitle(String title) {
@@ -61,7 +62,7 @@ public class GameBean implements Serializable {
 	}
 
 	public boolean hasStarted() {
-		return game.hasStarted();
+		return game != null && game.hasStarted();
 	}
 
 	public Card[] getCards() {

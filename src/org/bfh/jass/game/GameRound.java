@@ -26,7 +26,8 @@ public class GameRound {
 
 	GameRoundState state;
 
-	public GameRound(int playerTurn) {
+	public GameRound(Game game, int playerTurn) {
+		this.game = game;
 		this.playerTurn = playerTurn;
 		state = GameRoundState.PICKING;
 

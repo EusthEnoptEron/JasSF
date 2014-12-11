@@ -24,7 +24,7 @@
                 </p:row>
 
             </p:panelGrid>
-
+            <h:outputText value="Has started? #{gameBean.hasStarted()}"/>
             <p:poll interval="1" update="lobbyForm" listener="#{gameBean.checkForStart}" />
             <c:if test="#{gameBean.creator}">
                 <h:commandLink action="#{gameBean.start}" value="Start Game" />

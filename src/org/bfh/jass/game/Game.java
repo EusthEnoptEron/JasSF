@@ -96,7 +96,7 @@ public class Game implements Serializable {
 
 		} else {
 			state = GameState.PLAYING;
-			round = new GameRound(0);
+			round = new GameRound(this, 0);
 		}
 	}
 
