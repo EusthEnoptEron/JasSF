@@ -30,8 +30,6 @@ public abstract class Player {
 	public void setTeam(Game.Team team) {
 		this.team = team;
 	}
-
-
 	public void setCards(Card[] cards) {
 		this.cards.clear();
 		Collections.addAll(this.cards, cards);

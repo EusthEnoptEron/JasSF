@@ -2,6 +2,7 @@ package org.bfh.jass.game;
 
 import org.apache.catalina.tribes.util.Arrays;
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Created by Simon on 2014/11/27.
@@ -73,7 +74,6 @@ public class Card {
 		}
 	}
 
-
 	public int getSortOrder(CardSuit trump) {
 		if(trump == suit) {
 			switch(rank) {
@@ -122,6 +122,14 @@ public class Card {
 		int result = rank != null ? rank.hashCode() : 0;
 		result = 31 * result + (suit != null ? suit.hashCode() : 0);
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		String suitName = StringUtils.capitalize(suit.name().toLowerCase());
+		String rankName = StringUtils.capitalize(rank.name().toLowerCase());
+
+		return suitName + rankName;
 	}
 
 }

@@ -1,7 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui" >
+      xmlns:j="http://java.sun.com/jsf/composite/components"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
     <title>#{messages.loginTitle}</title>
@@ -9,8 +10,38 @@
 <ui:composition template="/template/layout.xhtml">
     <ui:define name="content">
         <h:form id="gameForm">
-            <h2>Welcome to your game</h2>
+            <div class="row">
+                <!-- PLAYER TOP -->
+                <div class="col-md-offset-3 col-md-6 player" id="player-3">
+                    <j:player player="#{gameBean.playerOpposite}" />
+                </div>
+            </div>
+            <div class="row">
+                <!-- PLAYER LEFT -->
+                <div class="col-md-3 player" id="player-4">
+                    <j:player player="#{gameBean.playerLeft}" />
+                </div>
+                <div class="col-md-6" id="table">
+                    <div id="trump">
+                        <strong>Trumpf:</strong>
+                        <figure id="trump-symbol">
 
+                        </figure>
+                    </div>
+                </div>
+
+                <!-- PLAYER RIGHT -->
+                <div class="col-md-3 player">
+                    <j:player player="#{gameBean.playerRight}" />
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- PLAYER -->
+                <div class="col-md-offset-3 col-md-6 player" id="player-1">
+                    <j:player player="#{gameBean.player}" showCards="true"/>
+                </div>
+            </div>
         </h:form>
     </ui:define>
 </ui:composition>

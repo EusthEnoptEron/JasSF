@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:j="http://java.sun.com/jsf/composite/components"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html">
+<composite:interface>
+    <composite:attribute name="player" required="true" type="org.bfh.jass.game.Player" />
+    <composite:attribute name="showCards" required="false" type="java.lang.Boolean" default="false" />
+</composite:interface>
+<composite:implementation>
+    <div class="avatar glyphicon glyphicon-user"></div>
+
+    <ui:fragment rendered="#{cc.attrs.showCards}">
+        <div class="cards">
+            <ui:repeat value="#{cc.attrs.player.cards}" var="card">
+                <j:card card="#{card}" />
+            </ui:repeat>
+        </div>
+    </ui:fragment>
+</composite:implementation>
+</html>

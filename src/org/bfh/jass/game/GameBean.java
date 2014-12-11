@@ -113,10 +113,12 @@ public class GameBean implements Serializable {
 	}
 	public Player getPlayer() {
 		for(HumanPlayer player: game.getHumanPlayers()) {
+			System.out.println("Compare: " + user.getUser().getUserID() + " with " + player.getUserId());
 			if(player.getUserId() == user.getUser().getUserID()) {
 				return player;
 			}
 		}
+		System.out.println("User not found...");
 		return null;
 	}
 

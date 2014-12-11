@@ -29,6 +29,7 @@ public class Game implements Serializable {
 		scores.put(Team.EVEN, 0);
 		scores.put(Team.ODD, 0);
 		this.creator = creator;
+		players[0] = new HumanPlayer(this, creator);
 		state = GameState.CONFIGURING;
 	}
 
