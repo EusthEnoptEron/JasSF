@@ -15,8 +15,6 @@ public class GameRound {
 	}
 
 	public static final int MAX_STEPS = 9;
-
-	private int playerTurn = 0;
 	private Game game;
 	private CardSuit trump;
 
@@ -26,9 +24,11 @@ public class GameRound {
 
 	GameRoundState state;
 
-	public GameRound(Game game, int playerTurn) {
+	private Player currentPlayer = null;
+
+	public GameRound(Game game, Player startingPlayer) {
 		this.game = game;
-		this.playerTurn = playerTurn;
+		currentPlayer = startingPlayer;
 		state = GameRoundState.PICKING;
 
 		// Distribute cards
@@ -39,7 +39,7 @@ public class GameRound {
 	}
 
 	public Player getCurrentPlayer() {
-		return game.getPlayers()[playerTurn];
+		return currentPlayer;
 	}
 
 	public void pickTrump(Player player, CardSuit trump) {
@@ -71,8 +71,7 @@ public class GameRound {
 	}
 
 	private void goToNextPlayer() {
-		int nextTurn = (playerTurn + 1) % 4;
-		setCurrentPlayer(game.getPlayers()[nextTurn]);
+		setCurrentPlayer(game.getNextPlayer(currentPlayer));
 	}
 
 	private void showdown() {
@@ -106,7 +105,7 @@ public class GameRound {
 	}
 
 	private void setCurrentPlayer(Player winningPlayer) {
-		playerTurn = winningPlayer.getSlot();
+		currentPlayer = winningPlayer;
 		winningPlayer.react();
 	}
 

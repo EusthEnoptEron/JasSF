@@ -4,8 +4,11 @@ import org.apache.commons.lang.ArrayUtils;
 import org.bfh.jass.user.User;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
 
 /**
  * Created by Simon on 2014/11/27.
@@ -96,12 +99,25 @@ public class Game implements Serializable {
 
 		} else {
 			state = GameState.PLAYING;
-			round = new GameRound(this, 0);
+			round = new GameRound(this, players[0]);
 		}
 	}
 
 	public Player[] getPlayers() {
 		return players;
+	}
+
+	/**
+	 * Finds out which player follows after a given player
+	 * @param player
+	 * @return
+	 */
+	public Player getNextPlayer(Player player) {
+		int index = ArrayUtils.indexOf(players, player);
+		if(index == ArrayUtils.INDEX_NOT_FOUND) return null;
+
+		index = (index + 1) % players.length;
+		return players[index];
 	}
 
 	public boolean isFree(int slot) {
@@ -135,6 +151,15 @@ public class Game implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public HumanPlayer[] getHumanPlayers() {
+		List<HumanPlayer> humanPlayers = new ArrayList<HumanPlayer>();
+		for(Player player:players) {
+			if(player instanceof HumanPlayer)
+				humanPlayers.add((HumanPlayer)player);
+		}
+		return humanPlayers.toArray(new HumanPlayer[humanPlayers.size()]);
 	}
 
 

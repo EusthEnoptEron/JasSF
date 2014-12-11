@@ -85,7 +85,6 @@ public class GameBean implements Serializable {
 
 	public String start() {
 		game.start();
-
 		return "game?faces-redirect=true";
 	}
 
@@ -101,4 +100,24 @@ public class GameBean implements Serializable {
 
 		return "lobby?faces-redirect=true";
 	}
+
+
+	public Player getPlayerLeft() {
+		return game.getNextPlayer(game.getNextPlayer(game.getNextPlayer(getPlayer())));
+	}
+	public Player getPlayerOpposite() {
+		return game.getNextPlayer(game.getNextPlayer(getPlayer()));
+	}
+	public Player getPlayerRight() {
+		return game.getNextPlayer(getPlayer());
+	}
+	public Player getPlayer() {
+		for(HumanPlayer player: game.getHumanPlayers()) {
+			if(player.getUserId() == user.getUser().getUserID()) {
+				return player;
+			}
+		}
+		return null;
+	}
+
 }
