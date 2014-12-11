@@ -6,16 +6,17 @@
       xmlns:j="http://java.sun.com/jsf/composite/components"
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html">
 <composite:interface>
-    <composite:attribute name="player" required="true" type="org.bfh.jass.game.Player" />
-    <composite:attribute name="showCards" required="false" type="java.lang.Boolean" default="false" />
+    <composite:attribute name="player" required="true" type="org.bfh.jass.game.PlayerBean"/>
+    <composite:attribute name="showCards" required="false" type="java.lang.Boolean" default="true"/>
+    <composite:attribute name="interactive" required="false" type="java.lang.Boolean" default="true"/>
 </composite:interface>
 <composite:implementation>
-    <div class="avatar glyphicon glyphicon-user"></div>
-
+    <div class="avatar glyphicon glyphicon-user #{cc.attrs.player.acting ? 'active' : ''}"></div>
+    <!--url="#{resource['redlight.gif']}" alt="Traffic Light" />-->
     <ui:fragment rendered="#{cc.attrs.showCards}">
         <div class="cards">
             <ui:repeat value="#{cc.attrs.player.cards}" var="card">
-                <j:card card="#{card}" />
+                <j:card card="#{card}" interactive="#{cc.attrs.interactive}"/>
             </ui:repeat>
         </div>
     </ui:fragment>

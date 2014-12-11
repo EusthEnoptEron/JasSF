@@ -45,6 +45,9 @@
     border-radius: 5px;
     margin: 5px;
 }
+.avatar.active {
+    border: 1px solid green;
+}
 
 .player {
     overflow: visible;
@@ -72,6 +75,13 @@
     transform: rotateY(0deg);
 }
 
+.card.unplayable {
+    background: gray;
+}
+.card.unplayable img {
+    opacity: 0.5;
+}
+
 .card.facedown {
     transform: rotateY(180deg);
 }
@@ -95,5 +105,5 @@
 }
 .card .front {
     /*z-index: 2;*/
-    background-image: url(../cards/cardSpades4.png);
+    /*background-image: url(../cards/cardSpades4.png);*/
 }

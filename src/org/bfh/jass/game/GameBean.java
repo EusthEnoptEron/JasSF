@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class GameBean implements Serializable {
 	@ManagedProperty("#{loginBean}")
 	private LoginBean user;
-
+	private Player player;
 	public LoginBean getUser() {
 		return user;
 	}
@@ -85,33 +85,11 @@ public class GameBean implements Serializable {
 
 	public String start() {
 		game.start();
+		player = fetchPlayer();
 		return "game?faces-redirect=true";
 	}
 
-	public void checkForStart() {
-		if(game.isFull()) {
-			game.start();
-			// TODO: redirect
-		}
-	}
-
-	public String join(Game game) {
-		this.game = game;
-
-		return "lobby?faces-redirect=true";
-	}
-
-
-	public Player getPlayerLeft() {
-		return game.getNextPlayer(game.getNextPlayer(game.getNextPlayer(getPlayer())));
-	}
-	public Player getPlayerOpposite() {
-		return game.getNextPlayer(game.getNextPlayer(getPlayer()));
-	}
-	public Player getPlayerRight() {
-		return game.getNextPlayer(getPlayer());
-	}
-	public Player getPlayer() {
+	private Player fetchPlayer() {
 		for(HumanPlayer player: game.getHumanPlayers()) {
 			System.out.println("Compare: " + user.getUser().getUserID() + " with " + player.getUserId());
 			if(player.getUserId() == user.getUser().getUserID()) {
@@ -122,4 +100,72 @@ public class GameBean implements Serializable {
 		return null;
 	}
 
+	public void checkForStart() {
+		if(game.isFull()) {
+			game.start();
+			// TODO: redirect
+		}
+	}
+
+	public boolean mustPickTrump() {
+		return game.getRound().getState() == GameRound.GameRoundState.PICKING
+				&& game.getRound().getCurrentPlayer() == player;
+	}
+
+	public String join(Game game) {
+		this.game = game;
+
+		return "lobby?faces-redirect=true";
+	}
+
+	public void playCard(CardBean card) {
+		game.getRound().playCard(player, card.getCard());
+	}
+
+	public PlayerBean getPlayerLeft() {
+		return new PlayerBean(game.getNextPlayer(game.getNextPlayer(game.getNextPlayer(player))));
+	}
+	public PlayerBean getPlayerOpposite() {
+		return new PlayerBean(game.getNextPlayer(game.getNextPlayer(player)));
+	}
+	public PlayerBean getPlayerRight() {
+		return new PlayerBean(game.getNextPlayer(player));
+	}
+	public PlayerBean getPlayer() {
+		return new PlayerBean(player);
+	}
+
+	public boolean isActing() {
+		return player.isActing();
+	}
+
+	public void pickDiamonds() {
+		game.getRound().pickTrump(player, CardSuit.DIAMONDS);
+	}
+	public void pickClubs() {
+		game.getRound().pickTrump(player, CardSuit.CLUBS);
+	}
+	public void pickHearts() {
+		game.getRound().pickTrump(player, CardSuit.HEARTS);
+	}
+	public void pickSpades() {
+		game.getRound().pickTrump(player, CardSuit.SPADES);
+	}
+
+	public String getTrump() {
+		CardSuit trump = game.getRound().getTrump();
+		if(trump != null)
+			return trump.name().toLowerCase();
+		else return "";
+	}
+
+	public CardBean[] getPlayedCards() {
+		Card[] playedCards = game.getRound().getPlayedCards();
+		CardBean[] cards = new CardBean[playedCards.length];
+
+		for(int i = 0; i < playedCards.length; i++) {
+			cards[i] =new CardBean(game, playedCards[i]);
+		}
+		return cards;
+	}
 }

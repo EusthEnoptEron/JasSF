@@ -35,7 +35,7 @@ public class ComputerPlayer extends Player {
 
 			getGame().getRound().playCard(this, legalCards[ random.nextInt(legalCards.length)]);
 		} else {
-
+			getGame().getRound().pass(this);
 		}
 	}
 }

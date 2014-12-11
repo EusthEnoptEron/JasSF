@@ -10,6 +10,24 @@
 <ui:composition template="/template/layout.xhtml">
     <ui:define name="content">
         <h:form id="gameForm">
+            <ui:fragment rendered="#{gameBean.mustPickTrump()}">
+                <div class="modal" style="display: block">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Choose trump</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h:commandButton image="#{resource['cards/spades.png']}" action="#{gameBean.pickSpades}" />
+                                <h:commandButton image="#{resource['cards/clubs.png']}" action="#{gameBean.pickClubs}" />
+                                <h:commandButton image="#{resource['cards/hearts.png']}" action="#{gameBean.pickHearts}" />
+                                <h:commandButton image="#{resource['cards/diamonds.png']}" action="#{gameBean.pickDiamonds}"/>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            </ui:fragment>
+
             <div class="row">
                 <!-- PLAYER TOP -->
                 <div class="col-md-offset-3 col-md-6 player" id="player-3">
@@ -24,9 +42,14 @@
                 <div class="col-md-6" id="table">
                     <div id="trump">
                         <strong>Trumpf:</strong>
-                        <figure id="trump-symbol">
+                        <figure id="trump-symbol #{gameBean.trump}">
 
                         </figure>
+                    </div>
+                    <div id="played-cards">
+                        <ui:repeat value="#{gameBean.playedCards}" var="card">
+                            <j:card card="#{card}" interactive="false" />
+                        </ui:repeat>
                     </div>
                 </div>
 

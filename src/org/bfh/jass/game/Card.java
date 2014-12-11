@@ -125,7 +125,7 @@ public class Card {
 	}
 
 	@Override
-	public String toString() {
+		 public String toString() {
 		String suitName = StringUtils.capitalize(suit.name().toLowerCase());
 		String rankName = StringUtils.capitalize(rank.name().toLowerCase());
 

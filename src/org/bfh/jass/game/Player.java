@@ -49,18 +49,10 @@ public abstract class Player {
 
 	public Card[] getLegalCards() {
 		List<Card> legalCards = new ArrayList<Card>();
-		Card[] playedCards    = game.getRound().getPlayedCards();
-		CardSuit firstSuit    = null;
-		if(playedCards.length > 0)
-			firstSuit = playedCards[0].getSuit();
-
 		for(Card card: cards) {
-			if(card.getSuit() == game.getTrump())
-				legalCards.add(card);
-			else if(firstSuit != null && card.getSuit() == firstSuit)
+			if(game.getRound().isPlayable(card))
 				legalCards.add(card);
 		}
-
 		return legalCards.toArray(new Card[legalCards.size()]);
 	}
 
@@ -77,4 +69,8 @@ public abstract class Player {
 	}
 
 	public abstract void react();
+
+	public boolean isActing() {
+		return game.getRound().getCurrentPlayer() == this;
+	}
 }

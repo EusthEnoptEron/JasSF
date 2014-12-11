@@ -15,14 +15,13 @@ import java.util.List;
  */
 public class Game implements Serializable {
 	Dictionary<Team, Integer> scores;
-	private int score;
+	private int score = 200;
 	private boolean started = false;
-	private CardSuit trump;
 	private GameRound round;
 	private GameState state;
 	private Player[] players = new Player[4];
 	private User creator;
-	private String title;
+	private String title = "Default game";
 
 	public Game(User creator) {
 		scores = new Hashtable<Team, Integer>();
@@ -56,6 +55,7 @@ public class Game implements Serializable {
 			for(int i = 0; i < players.length; i++) {
 				if(players[i] == null)
 					players[i] = new ComputerPlayer(this);
+				players[i].setTeam( i % 2 == 0 ? Team.EVEN : Team.ODD );
 			}
 
 			this.state = GameState.PLAYING;
@@ -74,13 +74,6 @@ public class Game implements Serializable {
 		return true;
 	}
 
-	public CardSuit getTrump() {
-		return trump;
-	}
-
-	public void setTrump(CardSuit trump) {
-		this.trump = trump;
-	}
 
 	public void addScore(Team team, int score) {
 		scores.put(team, scores.get(team) + score);
