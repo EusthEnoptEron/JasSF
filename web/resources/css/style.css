@@ -1,7 +1,7 @@
 #table {
     /*width: 500px;*/
     height: 500px;
-    background: url(../wood_pattern_light.png);
+    background: url(wood_pattern_light.png);
     position: relative;
 
     border-radius: 20px;
@@ -53,8 +53,7 @@
     overflow: visible;
 }
 
-#player-4 {
-    text-align: right;
+#player-left {
 }
 
 
@@ -106,4 +105,49 @@
 .card .front {
     /*z-index: 2;*/
     /*background-image: url(../cards/cardSpades4.png);*/
+}
+
+.hearts, .diamonds {
+    color: red !important;
+}
+
+.spades, .clubs {
+    color: black !important;
+}
+
+.hearts.big, .spades.big, .clubs.big, .diamonds.big {
+    font-size: 7em;
+}
+
+#trump-picker a:hover {
+}
+
+#trump-symbol {
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#trump-symbol.hearts {  background-image: url(hearts.png); }
+#trump-symbol.spades {  background-image: url(spades.png); }
+#trump-symbol.diamonds {  background-image: url(diamonds.png); }
+#trump-symbol.clubs {  background-image: url(clubs.png); }
+
+
+#player-left .card {
+
+    clear: both;
+    right: 40px;
+    margin-bottom: -90px;
+    transform: rotate(90deg);
+    transform-origin: top right;
+    float: right;
+
+}
+
+#player-right .card {
+    clear: both;
+    right: 100px;
+    margin-bottom: -90px;
+    transform: rotate(-90deg);
+    transform-origin: top right;
+    float: left;
 }

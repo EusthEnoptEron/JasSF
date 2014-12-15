@@ -1,5 +1,7 @@
 package org.bfh.jass.game;
 
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.myfaces.shared.util.HashMapUtils;
 import org.bfh.jass.user.User;
 
 import java.util.*;
@@ -65,11 +67,15 @@ public class GameRound {
 		return values.toArray(new Card[values.size()]);
 	}
 
+	public Map<Player, Card> getCardsOnTable() {
+		return Collections.unmodifiableMap(cards);
+	}
+
 	public void playCard(Player player, Card card) {
-		if(state == GameRoundState.PLAYING) {
+		if (state == GameRoundState.PLAYING) {
 
 			if (player == getCurrentPlayer()) {
-				if(isPlayable(card)) {
+				if (isPlayable(card)) {
 					System.out.println(String.format("Player %d plays %s", game.getPlayerSlot(player), card));
 					cards.put(player, card);
 					player.removeCard(card);
@@ -80,25 +86,36 @@ public class GameRound {
 		}
 	}
 
-	public void pass(Player player) {
-		if(state == GameRoundState.PLAYING && currentPlayer == player) {
-			System.out.println(String.format("Player %d has to pass", game.getPlayerSlot(player)));
-			goToNextPlayer();
+	/**
+	 * Gets the highest trump currently on the table.
+	 * @return
+	 */
+	public Card getHighestTrump() {
+		if(trump == null) return null;
+		Card highestTrump = null;
+
+		for(Card card : cards.values()) {
+			if(card.getSuit() == trump) {
+				if(highestTrump == null ||
+		        card.getSortOrder(trump) > highestTrump.getSortOrder(trump)) {
+					highestTrump = card;
+				}
+			}
 		}
+		return highestTrump;
+	}
+
+	public CardSuit getPrimarySuit() {
+		Card[] playedCards = cards.values().toArray(new Card[0]);
+		if(playedCards.length > 0)
+			return playedCards[0].getSuit();
+		else
+			return null;
 	}
 
 	public boolean isPlayable(Card card) {
-		Card[] playedCards    = game.getRound().getPlayedCards();
-		CardSuit firstSuit    = null;
-		if(playedCards.length > 0)
-			firstSuit = playedCards[0].getSuit();
 
-		if(trump != null && card.getSuit() == trump)
-			return true;
-		else if(firstSuit == null || card.getSuit() == firstSuit)
-			return true;
-
-		return false;
+		return true;
 	}
 
 	private void goToNextPlayer() {
@@ -127,9 +144,10 @@ public class GameRound {
 			score += card.getValue(trump);
 		}
 
-		System.out.println(String.format("Player %d wins showdown", game.getPlayerSlot(winningPlayer)));
+		System.out.println(String.format("Player %d wins showdown with %s", game.getPlayerSlot(winningPlayer), winningCard));
 
 		// TODO: player.setWonCards
+		winningPlayer.addWonCards(getPlayedCards());
 		game.addScore(winningPlayer.getTeam(), score);
 
 		if(!allCardsPlayed()) {
@@ -153,9 +171,15 @@ public class GameRound {
 				game.getPlayers()[3].getCards().length == 0;
 	}
 
+	public void demandReaction(HumanPlayer player) {
+		if(player.getUserId() == game.getCreator().getUserID()) {
+			currentPlayer.react();
+		}
+	}
+
 	private void setCurrentPlayer(Player winningPlayer) {
 		currentPlayer = winningPlayer;
-		winningPlayer.react();
+//		winningPlayer.react();
 	}
 
 }

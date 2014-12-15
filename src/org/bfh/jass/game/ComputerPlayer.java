@@ -25,17 +25,11 @@ public class ComputerPlayer extends Player {
 
 	private void pickTrump() {
 		CardSuit[] suits = CardSuit.values();
-
 		getGame().getRound().pickTrump(this, suits[ random.nextInt(suits.length) ]);
 	}
 
 	private void playCard() {
-		if(canPlay()) {
-			Card[] legalCards = getLegalCards();
-
-			getGame().getRound().playCard(this, legalCards[ random.nextInt(legalCards.length)]);
-		} else {
-			getGame().getRound().pass(this);
-		}
+		Card[] legalCards = getLegalCards();
+		getGame().getRound().playCard(this, legalCards[ random.nextInt(legalCards.length)]);
 	}
 }

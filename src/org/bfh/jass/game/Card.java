@@ -51,9 +51,6 @@ public class Card {
 	public int getValue(CardSuit trump) {
 		if(trump == suit) {
 			switch(rank) {
-				case SIX: return 6;
-				case SEVEN: return 7;
-				case EIGHT: return 8;
 				case NINE: return 14;
 				case TEN: return 10;
 				case JOKER: return 20;
@@ -75,7 +72,7 @@ public class Card {
 	}
 
 	public int getSortOrder(CardSuit trump) {
-		if(trump == suit) {
+		if(trump != suit) {
 			switch(rank) {
 				case SIX: return 0;
 				case SEVEN: return 1;

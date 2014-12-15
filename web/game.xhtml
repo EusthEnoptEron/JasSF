@@ -17,11 +17,11 @@
                             <div class="modal-header">
                                 <h4 class="modal-title">Choose trump</h4>
                             </div>
-                            <div class="modal-body">
-                                <h:commandButton image="#{resource['cards/spades.png']}" action="#{gameBean.pickSpades}" />
-                                <h:commandButton image="#{resource['cards/clubs.png']}" action="#{gameBean.pickClubs}" />
-                                <h:commandButton image="#{resource['cards/hearts.png']}" action="#{gameBean.pickHearts}" />
-                                <h:commandButton image="#{resource['cards/diamonds.png']}" action="#{gameBean.pickDiamonds}"/>
+                            <div class="modal-body row" id="trump-picker">
+                                <p:commandLink styleClass="spades big col-md-3" action="#{gameBean.pickSpades}" value="♠" update="@form" />
+                                <p:commandLink styleClass="clubs big col-md-3" action="#{gameBean.pickClubs}" value="♣" update="@form" />
+                                <p:commandLink styleClass="hearts big col-md-3" action="#{gameBean.pickHearts}" value="♥" update="@form" />
+                                <p:commandLink styleClass="diamonds big col-md-3" action="#{gameBean.pickDiamonds}" value="♦" update="@form" />
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
@@ -36,13 +36,14 @@
             </div>
             <div class="row">
                 <!-- PLAYER LEFT -->
-                <div class="col-md-3 player" id="player-4">
+                <div class="col-md-3 player" id="player-left">
                     <j:player player="#{gameBean.playerLeft}" />
                 </div>
+                <!-- TABLE -->
                 <div class="col-md-6" id="table">
                     <div id="trump">
                         <strong>Trumpf:</strong>
-                        <figure id="trump-symbol #{gameBean.trump}">
+                        <figure id="trump-symbol" class="#{gameBean.trump}">
 
                         </figure>
                     </div>
@@ -54,7 +55,7 @@
                 </div>
 
                 <!-- PLAYER RIGHT -->
-                <div class="col-md-3 player">
+                <div class="col-md-3 player" id="player-right">
                     <j:player player="#{gameBean.playerRight}" />
                 </div>
             </div>
@@ -65,6 +66,7 @@
                     <j:player player="#{gameBean.player}" showCards="true"/>
                 </div>
             </div>
+            <p:poll interval="3" update="@form" listener="#{gameBean.demandReaction}" />
         </h:form>
     </ui:define>
 </ui:composition>

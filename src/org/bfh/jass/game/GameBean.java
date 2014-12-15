@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Created by Simon on 2014/12/04.
@@ -125,6 +126,7 @@ public class GameBean implements Serializable {
 	public PlayerBean getPlayerLeft() {
 		return new PlayerBean(game.getNextPlayer(game.getNextPlayer(game.getNextPlayer(player))));
 	}
+
 	public PlayerBean getPlayerOpposite() {
 		return new PlayerBean(game.getNextPlayer(game.getNextPlayer(player)));
 	}
@@ -152,6 +154,7 @@ public class GameBean implements Serializable {
 		game.getRound().pickTrump(player, CardSuit.SPADES);
 	}
 
+
 	public String getTrump() {
 		CardSuit trump = game.getRound().getTrump();
 		if(trump != null)
@@ -160,12 +163,18 @@ public class GameBean implements Serializable {
 	}
 
 	public CardBean[] getPlayedCards() {
-		Card[] playedCards = game.getRound().getPlayedCards();
-		CardBean[] cards = new CardBean[playedCards.length];
+		Map<Player, Card> playedCards = game.getRound().getCardsOnTable();
 
-		for(int i = 0; i < playedCards.length; i++) {
-			cards[i] =new CardBean(game, playedCards[i]);
+		CardBean[] cards = new CardBean[playedCards.size()];
+
+		int i = 0;
+		for(Player player: playedCards.keySet()) {
+			cards[i++] = new CardBean(player, playedCards.get(player));
 		}
 		return cards;
+	}
+
+	public void demandReaction() {
+		game.getRound().demandReaction((HumanPlayer)player);
 	}
 }

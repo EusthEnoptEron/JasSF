@@ -1,5 +1,7 @@
 package org.bfh.jass.game;
 
+import java.util.Map;
+
 /**
  * Created by Simon on 2014/12/11.
  */
@@ -13,7 +15,7 @@ public class PlayerBean {
 		Card[] realCards = player.getCards();
 		CardBean[] cards = new CardBean[realCards.length];
 		for(int i = 0; i < cards.length; i++) {
-			cards[i] = new CardBean(player.getGame(), realCards[i]);
+			cards[i] = new CardBean(player, realCards[i]);
 		}
 		return cards;
 	}
@@ -21,4 +23,18 @@ public class PlayerBean {
 	public boolean isActing() {
 		return player.isActing();
 	}
+
+	public boolean canPlay() {
+		return player.canPlay();
+	}
+
+	public CardBean getPlayedCard() {
+		Map<Player, Card> cards = player.getGame().getRound().getCardsOnTable();
+		Card myCard = cards.get(player);
+		if(myCard == null)
+			return null;
+		else
+			return new CardBean(player, myCard);
+	}
+
 }

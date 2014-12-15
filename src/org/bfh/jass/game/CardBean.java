@@ -8,17 +8,16 @@ import org.bfh.jass.user.LoginBean;
  */
 public class CardBean {
 	private Card card;
-	private Game game;
+	private Player player;
 
-	public CardBean(Game game, Card card) {
+	public CardBean(Player player, Card card) {
 		this.card = card;
-		this.game = game;
+		this.player = player;
 	}
 
 	public boolean isPlayable() {
-		return game.getRound().isPlayable(card);
+		return player.isActing() && player.isPlayable(card);
 	}
-
 
 	public String getResourcePath() {
 
