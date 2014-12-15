@@ -1,16 +1,111 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui" >
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:j="http://java.sun.com/jsf/composite/components"
+      xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-    <title>#{messages.loginTitle}</title>
-</h:head>
 <ui:composition template="/template/layout.xhtml">
+    <ui:define name="head">
+        <title>LOL</title>
+        <h:outputScript name="game.js" />
+    </ui:define>
     <ui:define name="content">
         <h:form id="gameForm">
-            <h2>Welcome to your game</h2>
+            <ui:fragment rendered="#{gameBean.mustPickTrump()}">
+                <div class="modal fade in" style="display: block">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Choose trump</h4>
+                            </div>
+                            <div class="modal-body row" id="trump-picker">
+                                <p:commandLink styleClass="spades big col-md-3" action="#{gameBean.pickSpades}" value="♠" update="@form" />
+                                <p:commandLink styleClass="clubs big col-md-3" action="#{gameBean.pickClubs}" value="♣" update="@form" />
+                                <p:commandLink styleClass="hearts big col-md-3" action="#{gameBean.pickHearts}" value="♥" update="@form" />
+                                <p:commandLink styleClass="diamonds big col-md-3" action="#{gameBean.pickDiamonds}" value="♦" update="@form" />
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            </ui:fragment>
 
+            <ui:fragment rendered="#{gameBean.over}">
+                <div class="modal fade in">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Game Over</h4>
+                            </div>
+                            <h2 class="modal-body" id="closing-modal">
+                                <p>#{gameBean.winner1.name} and #{gameBean.winner2.name} have
+                                    won the game.</p>
+
+                            </h2>
+                            <div class="modal-footer">
+                                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                                <h:commandLink styleClass="btn btn-primary" action="overview?faces-redirect=true" value="Back to Overview">
+                                    <f:actionListener type="org.bfh.jass.game.GameExitEvent"/>
+                                </h:commandLink>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            </ui:fragment>
+
+            <div class="row">
+                <!-- PLAYER TOP -->
+                <div class="col-xs-offset-3 col-xs-6 player" id="player-3">
+                    <j:player player="#{gameBean.playerOpposite}" />
+                </div>
+            </div>
+            <div class="row">
+                <!-- PLAYER LEFT -->
+                <div class="col-xs-3 player" id="player-left">
+                    <j:player player="#{gameBean.playerLeft}" />
+                </div>
+                <!-- TABLE -->
+                <div class="col-xs-6" id="table">
+                    <div id="trump">
+                        <strong>Trumpf:</strong>
+                        <figure id="trump-symbol" class="#{gameBean.trump}">
+
+                        </figure>
+                    </div>
+                    <div id="played-cards">
+                        <div id="card-top">
+                            <j:card card="#{gameBean.playerOpposite.playedCard}" interactive="false" />
+                        </div>
+                        <div id="card-left">
+                            <j:card card="#{gameBean.playerLeft.playedCard}" interactive="false" />
+                        </div>
+                        <div id="card-right">
+                            <j:card card="#{gameBean.playerRight.playedCard}" interactive="false" />
+                        </div>
+                        <div id="card-bottom">
+                            <j:card card="#{gameBean.player.playedCard}" interactive="false" />
+                        </div>
+                    </div>
+                    <!--<div id="played-cards">-->
+                        <!--<ui:repeat value="#{gameBean.playedCards}" var="card">-->
+                            <!--<j:card card="#{card}" interactive="false" />-->
+                        <!--</ui:repeat>-->
+                    <!--</div>-->
+                </div>
+
+                <!-- PLAYER RIGHT -->
+                <div class="col-xs-3 player" id="player-right">
+                    <j:player player="#{gameBean.playerRight}" />
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- PLAYER -->
+                <div class="col-xs-offset-3 col-xs-6 player" id="player-1">
+                    <j:player player="#{gameBean.player}" showCards="true"/>
+                </div>
+            </div>
+            <p:poll interval="3" update="@form" listener="#{gameBean.demandReaction}" rendered="#{not gameBean.mustPickTrump() and not gameBean.over}" onsuccess="update" />
         </h:form>
     </ui:define>
 </ui:composition>

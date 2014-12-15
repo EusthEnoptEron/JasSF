@@ -60,4 +60,13 @@ public class GameManager {
 		}
 		return list.toArray(new Game[list.size()]);
 	}
+
+	public void closeGame(Game game) {
+		games.remove(game);
+
+		if(game.getState() == Game.GameState.CLOSING) {
+			// Write to DB...
+
+		}
+	}
 }

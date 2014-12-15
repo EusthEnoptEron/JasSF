@@ -23,9 +23,6 @@ public class LogoutActionEvent implements ActionListener {
 		loginBean.setPassword(null);
 		loginBean.setDateOfBirth(null);
 		System.out.println("-------------------------");
-
-
-
 	}
 
 }

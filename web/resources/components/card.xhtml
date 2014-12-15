@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite" xmlns:ui="http://java.sun.com/jsf/facelets">
+<composite:interface>
+    <composite:attribute name="card" required="true" type="org.bfh.jass.game.CardBean" />
+    <composite:attribute name="interactive" type="java.lang.Boolean" required="false" default="false" />
+</composite:interface>
+<composite:implementation>
+    <ui:fragment rendered="#{cc.attrs.card != null}">
+        <p:commandLink  onsuccess="update" rendered="#{cc.attrs.interactive and cc.attrs.card.playable}" action="#{gameBean.playCard(cc.attrs.card)}" update="@form">
+            <div class="card">
+                <h:graphicImage alt="" styleClass="front" name="#{cc.attrs.card.resourcePath}.png" />
+            </div>
+        </p:commandLink>
+        <ui:fragment rendered="#{not cc.attrs.interactive or not cc.attrs.card.playable}">
+            <div class="card #{cc.attrs.interactive ? 'unplayable' : ''}">
+                <h:graphicImage alt="" styleClass="front" name="#{cc.attrs.card.resourcePath}.png" />
+            </div>
+        </ui:fragment>
+    </ui:fragment>
+</composite:implementation>
+</html>
