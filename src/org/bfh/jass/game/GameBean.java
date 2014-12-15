@@ -114,9 +114,16 @@ public class GameBean implements Serializable {
 	}
 
 	public String join(Game game) {
-		this.game = game;
-
-		return "lobby?faces-redirect=true";
+		// Leave current game
+		if(game.isFull()) {
+			// TODO: Message
+			return "";
+		} else {
+			this.leave();
+			this.game = game;
+			this.player = this.game.addPlayer(user.getUser());
+			return "lobby?faces-redirect=true";
+		}
 	}
 
 	public void playCard(CardBean card) {
@@ -176,5 +183,30 @@ public class GameBean implements Serializable {
 
 	public void demandReaction() {
 		game.getRound().demandReaction((HumanPlayer)player);
+	}
+
+	public boolean isOver() {
+		return game.getState() == Game.GameState.CLOSING;
+	}
+
+	public String getWinnerTeam() {
+		return game.getWinnerTeam().name();
+	}
+
+	public Player getWinner1() {
+		return game.getPlayers(game.getWinnerTeam())[0];
+	}
+	public Player getWinner2() {
+		return game.getPlayers(game.getWinnerTeam())[1];
+	}
+
+	public void leave() {
+		if(game != null && game.getState() == Game.GameState.PLAYING) {
+			game.abort();
+		}
+		game = null;
+	}
+	public boolean isAborted() {
+		return game.getState() == Game.GameState.ABORTED;
 	}
 }

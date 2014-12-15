@@ -12,7 +12,14 @@
     <composite:attribute name="interactive" required="false" type="java.lang.Boolean" default="true"/>
 </composite:interface>
 <composite:implementation>
-    <div class="avatar glyphicon glyphicon-user #{cc.attrs.player.acting ? 'active' : ''}"></div>
+    <div class="player-card">
+        <div class="avatar glyphicon glyphicon-user #{cc.attrs.player.acting ? 'active' : ''}">
+        </div>
+        <h:outputText value="#{cc.attrs.player.name}" styleClass="name" />
+        <span class="score-display">
+            <h:outputText value="#{cc.attrs.player.score}" styleClass="score" />/<h:outputText value="#{gameBean.maxScore}" />
+        </span>
+    </div>
     <!--url="#{resource['redlight.gif']}" alt="Traffic Light" />-->
     <ui:fragment rendered="#{cc.attrs.showCards}">
         <div class="cards">

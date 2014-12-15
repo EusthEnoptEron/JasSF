@@ -33,4 +33,9 @@ public class HumanPlayer extends Player {
 	public void react() {
 
 	}
+
+	@Override
+	public String getName() {
+		return user.getUsername();
+	}
 }

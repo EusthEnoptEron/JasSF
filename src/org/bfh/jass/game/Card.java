@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 public class Card {
 	private CardRank rank;
 	private CardSuit suit;
+	private boolean played;
 
 	public static final CardRank[] NON_TRUMP_ORDER = new CardRank[]{
 			CardRank.SIX,
@@ -101,6 +102,24 @@ public class Card {
 		return 0;
 	}
 
+	public int getSortOrder(CardSuit trump, CardSuit primarySuit) {
+		if(trump != suit && primarySuit != suit) {
+			switch(rank) {
+				case SIX: return 0;
+				case SEVEN: return 1;
+				case EIGHT: return 2;
+				case NINE: return 3;
+				case TEN: return 4;
+				case JOKER: return 5;
+				case QUEEN: return 6;
+				case KING: return 7;
+				case ACE: return 8;
+				default: return 0;
+			}
+		}
+		return getSortOrder(trump) + 9;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -128,5 +147,13 @@ public class Card {
 
 		return suitName + rankName;
 	}
+
+	public void setPlayed(boolean val) {
+		played = val;
+	}
+	public boolean isPlayed() {
+		return played;
+	}
+
 
 }

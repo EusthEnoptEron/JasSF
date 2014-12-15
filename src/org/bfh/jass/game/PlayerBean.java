@@ -37,4 +37,15 @@ public class PlayerBean {
 			return new CardBean(player, myCard);
 	}
 
+	public String getName() {
+		return player.getName();
+	}
+
+	public int getScore() {
+		return player.getGame().getScore(player.getTeam());
+	}
+
+	public boolean hasWonCards() {
+		return player.getWonCards().length > 0;
+	}
 }

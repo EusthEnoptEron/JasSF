@@ -135,7 +135,7 @@ public abstract class Player {
 	}
 
 	public int getSlot() {
-		return slot;
+		return game.getPlayerSlot(this);
 	}
 
 	public void setSlot(int slot) {
@@ -151,4 +151,6 @@ public abstract class Player {
 	public boolean isPlayable(Card card) {
 		return ArrayUtils.contains(getLegalCards(), card);
 	}
+
+	public abstract String getName();
 }

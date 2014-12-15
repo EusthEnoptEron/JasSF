@@ -1,6 +1,7 @@
 package org.bfh.jass.game;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.bfh.jass.user.LoginBean;
 import org.bfh.jass.user.User;
 
 import java.io.Serializable;
@@ -22,6 +23,7 @@ public class Game implements Serializable {
 	private Player[] players = new Player[4];
 	private User creator;
 	private String title = "Default game";
+	private Team winnerTeam;
 
 	public Game(User creator) {
 		scores = new Hashtable<Team, Integer>();
@@ -56,6 +58,7 @@ public class Game implements Serializable {
 				if(players[i] == null)
 					players[i] = new ComputerPlayer(this);
 				players[i].setTeam( i % 2 == 0 ? Team.EVEN : Team.ODD );
+
 			}
 
 			this.state = GameState.PLAYING;
@@ -84,14 +87,20 @@ public class Game implements Serializable {
 	}
 
 	void startNewRound() {
-		round = null;
-
 		if(scores.get(Team.EVEN) >= score ||
-				scores.get(Team.ODD) >= score) {
+			scores.get(Team.ODD) >= score) {
 			state = GameState.CLOSING;
-			// TODO: Select winner
 
+			setWinnerTeam(
+					scores.get(Team.EVEN) > scores.get(Team.ODD)
+					? Team.EVEN
+					: Team.ODD
+			);
+
+			//TODO: save in DB
+			GameManager.getInstance().closeGame(this);
 		} else {
+			round = null;
 			state = GameState.PLAYING;
 			round = new GameRound(this, players[0]);
 		}
@@ -156,12 +165,56 @@ public class Game implements Serializable {
 		return humanPlayers.toArray(new HumanPlayer[humanPlayers.size()]);
 	}
 
+	public int getScore(Team team) {
+		return scores.get(team);
+	}
+
+	public Team getWinnerTeam() {
+		return winnerTeam;
+	}
+
+	public void setWinnerTeam(Team winnerTeam) {
+		this.winnerTeam = winnerTeam;
+	}
+
+	public Player[] getPlayers(Team team) {
+		if(team == Team.EVEN) {
+			return new Player[]{
+				players[0],
+				players[2]
+			};
+		} else {
+			return new Player[]{
+				players[1],
+				players[3]
+			};
+		}
+	}
+
+	public void abort() {
+		if(state != GameState.CLOSING) {
+			state = GameState.ABORTED;
+			GameManager.getInstance().closeGame(this);
+		}
+	}
+
+	public HumanPlayer addPlayer(User user) {
+		for(int i = 0; i < players.length; i++) {
+			if(players[i] == null) {
+				players[i] = new HumanPlayer(this, user);
+				return (HumanPlayer)players[i];
+			}
+		}
+		return null;
+	}
+
 
 	public enum GameState {
 		CONFIGURING,
 		WAITING,
 		PLAYING,
-		CLOSING
+		CLOSING,
+		ABORTED
 	}
 
 	public enum Team {

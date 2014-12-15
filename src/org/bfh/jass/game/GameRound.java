@@ -120,7 +120,8 @@ public class GameRound {
 
 	private void goToNextPlayer() {
 		if(++step == 4) {
-			showdown();
+			// Showdown
+			setCurrentPlayer(null);
 		} else {
 			System.out.println(String.format("Go to player %d", game.getPlayerSlot(game.getNextPlayer(currentPlayer))));
 
@@ -131,13 +132,14 @@ public class GameRound {
 	private void showdown() {
 		Card winningCard = null;
 		Player winningPlayer = null;
+		CardSuit primarySuit = getPrimarySuit();
 		int score = 0;
 
 		// Select winner
 		for(Player player: cards.keySet()) {
 			Card card = cards.get(player);
 			if(winningCard == null
-					|| card.getSortOrder(trump) > winningCard.getSortOrder(trump)) {
+					|| card.getSortOrder(trump, primarySuit) > winningCard.getSortOrder(trump, primarySuit)) {
 				winningCard = card;
 				winningPlayer = player;
 			}
@@ -173,7 +175,10 @@ public class GameRound {
 
 	public void demandReaction(HumanPlayer player) {
 		if(player.getUserId() == game.getCreator().getUserID()) {
-			currentPlayer.react();
+			if(currentPlayer == null)
+				showdown();
+			else
+				currentPlayer.react();
 		}
 	}
 

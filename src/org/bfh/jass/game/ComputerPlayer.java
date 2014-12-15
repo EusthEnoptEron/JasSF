@@ -7,6 +7,9 @@ import java.util.Random;
  */
 public class ComputerPlayer extends Player {
 	private Random random;
+	private static final String[] NAMES = new String[] {
+			"Rudi", "Hans", "Sepp", "Anton"
+	};
 	public ComputerPlayer(Game game) {
 		super(game);
 
@@ -21,6 +24,11 @@ public class ComputerPlayer extends Player {
 		} else if(state == GameRound.GameRoundState.PLAYING) {
 			playCard();
 		}
+	}
+
+	@Override
+	public String getName() {
+		return NAMES[getSlot()] + " (Computer)";
 	}
 
 	private void pickTrump() {
