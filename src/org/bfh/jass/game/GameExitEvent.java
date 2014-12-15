@@ -18,8 +18,7 @@ public class GameExitEvent implements ActionListener {
 		System.out.println("-------------------------");
 		System.out.println("Leave Game");
 		FacesContext context = FacesContext.getCurrentInstance();
-		HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-		GameBean gameBean = (GameBean)(session.getAttribute("gameBean"));
+		GameBean gameBean = context.getApplication().evaluateExpressionGet(context, "#{gameBean}", GameBean.class);
 		gameBean.leave();
 	}
 }

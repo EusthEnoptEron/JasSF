@@ -129,7 +129,8 @@ public class GameBean implements Serializable {
 			// TODO: Message
 			return "";
 		} else {
-			this.leave();
+			if(this.game != game)
+				this.leave();
 			this.game = game;
 			this.player = this.game.addPlayer(user.getUser());
 			return "lobby?faces-redirect=true";

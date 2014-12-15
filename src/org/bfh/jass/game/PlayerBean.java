@@ -48,4 +48,8 @@ public class PlayerBean {
 	public boolean hasWonCards() {
 		return player.getWonCards().length > 0;
 	}
+
+	public String getTeam() {
+		return "team-" + player.getTeam().name().toLowerCase();
+	}
 }

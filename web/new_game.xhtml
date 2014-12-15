@@ -8,16 +8,24 @@
 </h:head>
 <ui:composition template="/template/layout.xhtml">
     <ui:define name="content">
-        <h:form id="gameForm">
-            <h2>New game</h2>
+        <h2>New game</h2>
+        <h:form id="gameForm" styleClass="form-horizontal">
+            <div class="form-group">
+                <h:outputLabel for="title" styleClass="col-sm-2 control-label">Name of the channel</h:outputLabel>
+                <div class="col-sm-10">
+                    <p:inputText id="title" value="#{gameBean.title}"  styleClass="form-control" />
+                </div>
+            </div>
 
-            <h:outputLabel for="title">Name of the channel</h:outputLabel>
-            <p:inputText id="title" value="#{gameBean.title}"  />
-
-            <h:outputLabel for="score">Score to win</h:outputLabel>:
-            <p:spinner id="score" value="#{gameBean.maxScore}" />
-
-            <h:commandLink action="#{gameBean.create}" value="Create" />
+            <div class="form-group">
+                <h:outputLabel for="score" styleClass="col-sm-2 control-label">Score to win</h:outputLabel>
+                <div class="col-sm-10">
+                    <p:spinner id="score" value="#{gameBean.maxScore}" min="50" max="2000" />
+                </div>
+            </div>
+            <div class="col-sm-offset-2 col-sm-10">
+                <p:commandButton ajax="false" action="#{gameBean.create}" value="Create" />
+            </div>
         </h:form>
     </ui:define>
 </ui:composition>

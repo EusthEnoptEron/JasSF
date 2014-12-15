@@ -1,34 +1,45 @@
 <html xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>#{messages.loginTitle}</title>
 </h:head>
 <ui:composition template="/template/layout.xhtml">
     <ui:define name="content">
         <h:form id="helloForm">
+            <h2>Overview</h2>
 
-        <h2>Game Overview</h2>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Players</th>
-                    <th>Name</th>
-                    <th>Creator</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="#{gameListBean.games}" var="game">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>1/4</td>
-                        <td>
-                            <h:commandLink value="#{game.title}" action="#{gameBean.join(game)}" />
-                        </td>
-                        <td>#{game.creator.username}</td>
+                        <th>Players</th>
+                        <th>Name</th>
+                        <th>Max Score</th>
+                        <th>Creator</th>
                     </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <c:forEach items="#{gameListBean.games}" var="game">
+                        <tr>
+                            <td>#{game.playerCount}/4</td>
+                            <td>
+                                <h:commandLink value="#{game.title}" action="#{gameBean.join(game)}" />
+                            </td>
+                            <td>
+                                #{game.score}
+                            </td>
+                            <td>#{game.creator.username}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+            <ui:fragment rendered="#{not gameListBean.hasGames()}">
+                <div class="alert">There are currently no games running.</div>
+            </ui:fragment>
+            <p:commandButton value="New Game" action="#{gameBean.startCreation}" ajax="false" icon="ui-icon-document">
+                <f:actionListener type="org.bfh.jass.game.GameExitEvent"/>
+            </p:commandButton>
         </h:form>
     </ui:define>
 </ui:composition>

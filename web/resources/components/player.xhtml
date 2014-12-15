@@ -13,7 +13,7 @@
 </composite:interface>
 <composite:implementation>
     <div class="player-card">
-        <div class="avatar glyphicon glyphicon-user #{cc.attrs.player.acting ? 'active' : ''}">
+        <div class="avatar #{cc.attrs.player.team} glyphicon glyphicon-user #{cc.attrs.player.acting ? 'active' : ''}">
         </div>
         <h:outputText value="#{cc.attrs.player.name}" styleClass="name" />
         <span class="score-display">

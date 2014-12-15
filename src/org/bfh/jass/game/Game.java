@@ -76,6 +76,14 @@ public class Game implements Serializable {
 		return true;
 	}
 
+	public int getPlayerCount() {
+		int count =0;
+		for(Player player : players) {
+			if(player != null)
+				count++;
+		}
+		return count;
+	}
 
 	public void addScore(Team team, int score) {
 		scores.put(team, scores.get(team) + score);
@@ -131,10 +139,8 @@ public class Game implements Serializable {
 
 	public void setPlayer(int slot, Player player) {
 		if(isFree(slot)) {
-			System.out.println("FREE");
 			int currentSlot = getPlayerSlot(player);
 			if(currentSlot >= 0) {
-				System.out.println("FINE");
 				players[currentSlot] = null;
 				players[slot] = player;
 			}
@@ -221,6 +227,10 @@ public class Game implements Serializable {
 				if(state == GameState.PLAYING) {
 					abort();
 				}
+				if(state == GameState.WAITING && getPlayerCount() == 0) {
+					abort();
+				}
+
 				return;
 			}
 		}

@@ -129,6 +129,10 @@ public class LoginBean implements Serializable {
 		return "login?faces-redirect=true";
 	}
 
+	public boolean isLoggedIn() {
+		return name != null;
+	}
+
 	public String getLocaleString() {
 		String locale = getLocale();
 
