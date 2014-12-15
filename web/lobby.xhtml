@@ -15,14 +15,32 @@
             <p:panelGrid>
                 <p:row>
                     <p:column colspan="2">Team Even</p:column>
+                    <p:column colspan="2">Team Odd</p:column>
                 </p:row>
                 <p:row>
                     <p:column>1</p:column>
                     <p:column>
-                        
+                        <h:outputText value="#{gameBean.player0.name}" rendered="#{not gameBean.isFree(0)}" />
+                        <p:commandButton value="Switch" action="#{gameBean.takeSlot(0)}" update="@form" rendered="#{gameBean.isFree(0)}" />
+                    </p:column>
+                    <p:column>1</p:column>
+                    <p:column>
+                        <h:outputText value="#{gameBean.player1.name}" rendered="#{not gameBean.isFree(1)}" />
+                        <p:commandButton value="Switch" action="#{gameBean.takeSlot(1)}" update="@form" rendered="#{gameBean.isFree(1)}" />
                     </p:column>
                 </p:row>
-
+                <p:row>
+                    <p:column>2</p:column>
+                    <p:column>
+                        <h:outputText value="#{gameBean.player2.name}" rendered="#{not gameBean.isFree(2)}" />
+                        <p:commandButton value="Switch" action="#{gameBean.takeSlot(2)}" update="@form" rendered="#{gameBean.isFree(2)}" />
+                    </p:column>
+                    <p:column>2</p:column>
+                    <p:column>
+                        <h:outputText value="#{gameBean.player3.name}" rendered="#{not gameBean.isFree(3)}" />
+                        <p:commandButton value="Switch" action="#{gameBean.takeSlot(3)}" update="@form" rendered="#{gameBean.isFree(3)}" />
+                    </p:column>
+                </p:row>
             </p:panelGrid>
             <h:outputText value="Has started? #{gameBean.hasStarted()}"/>
             <p:poll interval="1" update="lobbyForm" listener="#{gameBean.checkForStart}" />

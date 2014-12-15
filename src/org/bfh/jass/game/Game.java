@@ -30,7 +30,6 @@ public class Game implements Serializable {
 		scores.put(Team.EVEN, 0);
 		scores.put(Team.ODD, 0);
 		this.creator = creator;
-		players[0] = new HumanPlayer(this, creator);
 		state = GameState.CONFIGURING;
 	}
 
@@ -130,9 +129,15 @@ public class Game implements Serializable {
 		return false;
 	}
 
-	public void setPlayer(int slot, User player) {
+	public void setPlayer(int slot, Player player) {
 		if(isFree(slot)) {
-			players[slot] = new HumanPlayer(this, player);
+			System.out.println("FREE");
+			int currentSlot = getPlayerSlot(player);
+			if(currentSlot >= 0) {
+				System.out.println("FINE");
+				players[currentSlot] = null;
+				players[slot] = player;
+			}
 		}
 	}
 
@@ -206,6 +211,19 @@ public class Game implements Serializable {
 			}
 		}
 		return null;
+	}
+
+	public void removePlayer(Player player) {
+		for(int i = 0; i < players.length; i++) {
+			if(players[i] == player) {
+				players[i] = null;
+
+				if(state == GameState.PLAYING) {
+					abort();
+				}
+				return;
+			}
+		}
 	}
 
 
