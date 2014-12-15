@@ -15,35 +15,51 @@
 </h:head>
 
 <h:body>
-    <div class="container">
-        <div id="header">
-            <h:form name="langForm">
-                <ul class="list-inline">
-                    <li>
-                        <h:commandLink id="fr" value="#{messages.french}">
-                            <f:actionListener type="org.bfh.jass.user.LanguageChangedActionEvent"/>
-                        </h:commandLink>
-                    </li>
-                    <li>
-                        <h:commandLink id="de" value="#{messages.german}">
-                            <f:actionListener type="org.bfh.jass.user.LanguageChangedActionEvent"/>
-                        </h:commandLink>
-                    </li>
-                    <li>
-                        <h:commandLink id="en" value="#{messages.english}">
-                            <f:actionListener type="org.bfh.jass.user.LanguageChangedActionEvent"/>
-                       </h:commandLink>
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">JasSF</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <h:form name="langForm">
+
+                <ul class="nav navbar-nav" style="float: none;">
+                    <li><h:outputLink>Overview</h:outputLink></li>
+                    <li><h:outputLink>Profile</h:outputLink></li>
+                    <li><h:outputLink>Logout</h:outputLink></li>
+                    <li class="dropdown navbar-right">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{messages[loginBean.localeString]} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <h:commandLink id="fr" value="#{messages.french}" rendered="#{loginBean.locale != 'fr'}">
+                                        <f:actionListener type="org.bfh.jass.user.LanguageChangedActionEvent"/>
+                                    </h:commandLink>
+                                </li>
+                                <li>
+                                    <h:commandLink id="de" value="#{messages.german}" rendered="#{loginBean.locale != 'de'}">
+                                        <f:actionListener type="org.bfh.jass.user.LanguageChangedActionEvent"/>
+                                    </h:commandLink>
+                                </li>
+                                <li>
+                                    <h:commandLink id="en" value="#{messages.english}" rendered="#{loginBean.locale != 'en'}">
+                                        <f:actionListener type="org.bfh.jass.user.LanguageChangedActionEvent"/>
+                                    </h:commandLink>
+                                </li>
+                            </ul>
                     </li>
                 </ul>
+                </h:form>
+            </div>
 
-                <h:graphicImage id="kuggeliImg" url="#{resource['bfh.jpg']}" alt="BFH logo"/>
-            </h:form>
-
-            <ui:insert name="header" >
-
-            </ui:insert>
         </div>
-
+    </nav>
+    <div class="container">
         <div id="content">
             <ui:insert name="content" >
                 <p>Content</p>

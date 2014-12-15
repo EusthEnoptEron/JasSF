@@ -40,7 +40,10 @@ public class LoginBean implements Serializable {
 	public String getLocale(){
 		if(locale == null){
 			FacesContext context = FacesContext.getCurrentInstance();
-			return  context.getViewRoot().getLocale().toString();
+			locale = context.getViewRoot().getLocale().toString();
+			String language = context.getViewRoot().getLocale().getLanguage().toLowerCase();
+
+			return language;
 		}
 		return locale;
 	}
@@ -126,4 +129,14 @@ public class LoginBean implements Serializable {
 		return "login?faces-redirect=true";
 	}
 
+	public String getLocaleString() {
+		String locale = getLocale();
+
+		if(locale.equals("de"))
+			return "german";
+		if(locale.equals("fr"))
+			return "french";
+		else
+			return "english";
+	}
 }
