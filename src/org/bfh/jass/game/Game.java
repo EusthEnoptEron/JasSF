@@ -6,10 +6,7 @@ import org.bfh.jass.user.User;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Simon on 2014/11/27.
@@ -24,6 +21,7 @@ public class Game implements Serializable {
 	private User creator;
 	private String title = "Default game";
 	private Team winnerTeam;
+	private int trumpPicker;
 
 	public Game(User creator) {
 		scores = new Hashtable<Team, Integer>();
@@ -31,6 +29,8 @@ public class Game implements Serializable {
 		scores.put(Team.ODD, 0);
 		this.creator = creator;
 		state = GameState.CONFIGURING;
+
+		trumpPicker = new Random().nextInt(players.length);
 	}
 
 	public User getCreator() {
@@ -107,9 +107,10 @@ public class Game implements Serializable {
 			//TODO: save in DB
 			GameManager.getInstance().closeGame(this);
 		} else {
+			trumpPicker = (trumpPicker + players.length - 1)  % players.length;
 			round = null;
 			state = GameState.PLAYING;
-			round = new GameRound(this, players[0]);
+			round = new GameRound(this, players[trumpPicker]);
 		}
 	}
 
