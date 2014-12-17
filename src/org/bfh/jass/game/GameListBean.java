@@ -19,4 +19,7 @@ public class GameListBean implements Serializable {
 	public Game[] getGames() {
 		return GameManager.getInstance().getOpenGames();
 	}
+	public boolean hasGames() {
+		return getGames().length > 0;
+	}
 }

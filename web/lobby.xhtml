@@ -10,25 +10,46 @@
 <ui:composition template="/template/layout.xhtml">
     <ui:define name="content">
         <h:form id="lobbyForm">
-            <h2>#{gameBean.title}</h2>
-
+            <h2>Lobby: #{gameBean.title}</h2>
+            <div class="alert alert-info">
+                Waiting for players to join.
+                <ui:fragment rendered="#{gameBean.creator}">
+                    You can start the game anytime by pressing <i>Start Game</i>.
+                </ui:fragment>
+            </div>
             <p:panelGrid>
                 <p:row>
                     <p:column colspan="2">Team Even</p:column>
+                    <p:column colspan="2">Team Odd</p:column>
                 </p:row>
                 <p:row>
                     <p:column>1</p:column>
                     <p:column>
-                        
+                        <h:outputText value="#{gameBean.player0.name}" rendered="#{not gameBean.isFree(0)}" />
+                        <p:commandButton value="Switch" action="#{gameBean.takeSlot(0)}" update="@form" rendered="#{gameBean.isFree(0)}" />
+                    </p:column>
+                    <p:column>1</p:column>
+                    <p:column>
+                        <h:outputText value="#{gameBean.player1.name}" rendered="#{not gameBean.isFree(1)}" />
+                        <p:commandButton value="Switch" action="#{gameBean.takeSlot(1)}" update="@form" rendered="#{gameBean.isFree(1)}" />
                     </p:column>
                 </p:row>
-
+                <p:row>
+                    <p:column>2</p:column>
+                    <p:column>
+                        <h:outputText value="#{gameBean.player2.name}" rendered="#{not gameBean.isFree(2)}" />
+                        <p:commandButton value="Switch" action="#{gameBean.takeSlot(2)}" update="@form" rendered="#{gameBean.isFree(2)}" />
+                    </p:column>
+                    <p:column>2</p:column>
+                    <p:column>
+                        <h:outputText value="#{gameBean.player3.name}" rendered="#{not gameBean.isFree(3)}" />
+                        <p:commandButton value="Switch" action="#{gameBean.takeSlot(3)}" update="@form" rendered="#{gameBean.isFree(3)}" />
+                    </p:column>
+                </p:row>
             </p:panelGrid>
-            <h:outputText value="Has started? #{gameBean.hasStarted()}"/>
             <p:poll interval="1" update="lobbyForm" listener="#{gameBean.checkForStart}" />
-            <c:if test="#{gameBean.creator}">
-                <h:commandLink action="#{gameBean.start}" value="Start Game" />
-            </c:if>
+            <br />
+            <p:commandButton ajax="false" rendered="#{gameBean.creator}" action="#{gameBean.start}" value="Start Game" />
         </h:form>
     </ui:define>
 </ui:composition>

@@ -1,13 +1,57 @@
+@import url(http://fonts.googleapis.com/css?family=Coming+Soon);
+body {
+    background: url(wood_1.png);
+}
+
+.player-card {
+    float: left;
+    margin: 10px;
+}
+
+.player-card .name {
+    display: block;
+}
+#main-content {
+    background: url(bgnoise_lg.png);
+    border-radius: 2em/1em;
+    box-shadow: 0 0 20px black, 0 0 5px white, inset 0 0 50px rgba(0,0,0,0.3);
+    min-height: 300px;
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+
+.alert-success {
+    background: url(bgnoise_green.png);
+    box-shadow: inset 0 0 5px black;
+    /*border-radius: 15px !important;*/
+    /*color: white !important;*/
+    /*text-shadow: 0 0 2px black;*/
+}
+
+.alert-info {
+    background: url(bgnoise_blue.jpg);
+    box-shadow: inset 0 0 5px #0A2E46;
+}
+
+.navbar {
+    background: url(wood_dark.png);
+}
+
+input.form-control, input.form-control:focus {
+    box-shadow: inset 0px 1px 4px #666;
+    border: 1px solid #888;
+}
+
 #table {
     /*width: 500px;*/
     height: 500px;
-    background: url(wood_pattern_light.png);
+    background: url(pool_table.png);
     position: relative;
 
     border-radius: 20px;
-    border: 2px solid rgb(252, 227, 184);
+    border: 2px solid rgb(7, 56, 11);
     box-shadow: 0 0 6px -2px black;
-    z-index: -1;
+    /*z-index: -1;*/
 }
 
 #trump {
@@ -19,8 +63,8 @@
 #trump strong {
     font-size: 2em;
     /*color: #634D10;*/
-    color: rgba(163, 131, 82, 1);
-    text-shadow: 1px 2px 2px rgba(126, 105, 72, 1), -1px -1px 1px rgba(255, 255, 255, 1);
+    color: rgb(7, 56, 11);
+    text-shadow: 1px 2px 2px rgb(5, 41, 8), -1px -1px 1px rgb(49, 113, 59);
     /*line-height: 3em;*/
     vertical-align: middle;
     /*margin-right: ;*/
@@ -35,7 +79,7 @@
     border-radius: 1em;
     box-shadow: inset 0 0 10px black;
     background-color: rgba(0,0,0,0.1);
-    border: 1px solid rgb(250, 220, 179);
+    border: 1px solid rgb(49, 113, 59);
 }
 
 .avatar.glyphicon {
@@ -54,6 +98,10 @@
     overflow: visible;
 }
 
+.player .cards, .player-opposite .cards {
+    height: 140px;
+    padding: 5px;
+}
 #player-left {
 }
 
@@ -101,7 +149,7 @@
 
 .card .back {
     /*z-index: 1;*/
-    background-image: url(../cards/cardBack_red4.png);
+    background-image: url(cards/cardBack_red4.png);
     transform: translateZ(-1px) rotateY(180deg);
 }
 .card .front {
@@ -152,6 +200,10 @@
     /*transform-origin: center;*/
 }
 
+#player-left .card, #player-right .card {
+    margin-right: -80px;
+}
+
 .name {
     font-size: 2em;
     line-height: 1em;
@@ -191,4 +243,44 @@
 
 #player-left .name, #player-right .name {
     display: block;
+}
+
+#content > h2, form > h2 {
+    background: url(wood_dark.png);
+    margin-top: 0;
+    padding-top: 20px;
+    color: rgb(145, 145, 145);
+    margin-left: -17px;
+    margin-right: -17px;
+    padding-left: 17px;
+    padding-bottom: 10px;
+    box-shadow: inset 0 0 109px #333;
+    font-family: 'Coming Soon', cursive;
+    text-shadow: -1px -1px 1px black;
+}
+
+
+#player-left .avatar, #player-right .avatar, #player-opposite .avatar {
+    color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#player-left .avatar {
+    background-image: url(avatars/player-2.jpg);
+}
+#player-left .avatar.active {
+    background-image: url(avatars/player-2-active.jpg);
+}
+#player-right .avatar {
+    background-image: url(avatars/player-4.jpg);
+}
+#player-right .avatar.active {
+    background-image: url(avatars/player-4-active.jpg);
+}
+#player-opposite .avatar {
+    background-image: url(avatars/player-3.jpg);
+}
+#player-opposite .avatar.active {
+    background-image: url(avatars/player-3-active.jpg);
 }

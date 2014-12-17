@@ -6,10 +6,7 @@ import org.bfh.jass.user.User;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Simon on 2014/11/27.
@@ -24,14 +21,16 @@ public class Game implements Serializable {
 	private User creator;
 	private String title = "Default game";
 	private Team winnerTeam;
+	private int trumpPicker;
 
 	public Game(User creator) {
 		scores = new Hashtable<Team, Integer>();
 		scores.put(Team.EVEN, 0);
 		scores.put(Team.ODD, 0);
 		this.creator = creator;
-		players[0] = new HumanPlayer(this, creator);
 		state = GameState.CONFIGURING;
+
+		trumpPicker = new Random().nextInt(players.length);
 	}
 
 	public User getCreator() {
@@ -77,6 +76,14 @@ public class Game implements Serializable {
 		return true;
 	}
 
+	public int getPlayerCount() {
+		int count =0;
+		for(Player player : players) {
+			if(player != null)
+				count++;
+		}
+		return count;
+	}
 
 	public void addScore(Team team, int score) {
 		scores.put(team, scores.get(team) + score);
@@ -100,9 +107,10 @@ public class Game implements Serializable {
 			//TODO: save in DB
 			GameManager.getInstance().closeGame(this);
 		} else {
+			trumpPicker = (trumpPicker + players.length - 1)  % players.length;
 			round = null;
 			state = GameState.PLAYING;
-			round = new GameRound(this, players[0]);
+			round = new GameRound(this, players[trumpPicker]);
 		}
 	}
 
@@ -130,9 +138,13 @@ public class Game implements Serializable {
 		return false;
 	}
 
-	public void setPlayer(int slot, User player) {
+	public void setPlayer(int slot, Player player) {
 		if(isFree(slot)) {
-			players[slot] = new HumanPlayer(this, player);
+			int currentSlot = getPlayerSlot(player);
+			if(currentSlot >= 0) {
+				players[currentSlot] = null;
+				players[slot] = player;
+			}
 		}
 	}
 
@@ -206,6 +218,23 @@ public class Game implements Serializable {
 			}
 		}
 		return null;
+	}
+
+	public void removePlayer(Player player) {
+		for(int i = 0; i < players.length; i++) {
+			if(players[i] == player) {
+				players[i] = null;
+
+				if(state == GameState.PLAYING) {
+					abort();
+				}
+				if(state == GameState.WAITING && getPlayerCount() == 0) {
+					abort();
+				}
+
+				return;
+			}
+		}
 	}
 
 

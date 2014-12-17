@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -44,6 +46,7 @@ public class GameBean implements Serializable {
 		if (game == null) {
 			// Make a tentative game
 			game = new Game(user.getUser());
+			player = game.addPlayer(user.getUser());
 			return "new_game?faces-redirect=true";
 		} else {
 			return "lobby?faces-redirect=true";
@@ -86,7 +89,6 @@ public class GameBean implements Serializable {
 
 	public String start() {
 		game.start();
-		player = fetchPlayer();
 		return "game?faces-redirect=true";
 	}
 
@@ -104,7 +106,15 @@ public class GameBean implements Serializable {
 	public void checkForStart() {
 		if(game.isFull()) {
 			game.start();
-			// TODO: redirect
+		}
+
+		if(game.hasStarted()) {
+			try {
+				FacesContext.getCurrentInstance().getExternalContext()
+						.redirect("game.xhtml?faces-redirect=true");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -119,7 +129,8 @@ public class GameBean implements Serializable {
 			// TODO: Message
 			return "";
 		} else {
-			this.leave();
+			if(this.game != game)
+				this.leave();
 			this.game = game;
 			this.player = this.game.addPlayer(user.getUser());
 			return "lobby?faces-redirect=true";
@@ -201,12 +212,36 @@ public class GameBean implements Serializable {
 	}
 
 	public void leave() {
-		if(game != null && game.getState() == Game.GameState.PLAYING) {
-			game.abort();
+		if(game != null) {
+			if(player != null) {
+				game.removePlayer(player);
+			}
 		}
 		game = null;
 	}
 	public boolean isAborted() {
 		return game.getState() == Game.GameState.ABORTED;
 	}
+
+	public PlayerBean getPlayer0() {
+		return new PlayerBean(game.getPlayers()[0]);
+	}
+	public PlayerBean getPlayer1() {
+		return new PlayerBean(game.getPlayers()[1]);
+	}
+	public PlayerBean getPlayer2() {
+		return new PlayerBean(game.getPlayers()[2]);
+	}
+	public PlayerBean getPlayer3() {
+		return new PlayerBean(game.getPlayers()[3]);
+	}
+
+	public boolean isFree(int slot) {
+		return game.isFree(slot);
+	}
+
+	public void takeSlot(int slot) {
+		game.setPlayer(slot, player);
+	}
+
 }

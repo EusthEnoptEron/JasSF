@@ -8,17 +8,26 @@
 <composite:interface>
     <composite:attribute name="card" required="true" type="org.bfh.jass.game.CardBean" />
     <composite:attribute name="interactive" type="java.lang.Boolean" required="false" default="false" />
+    <composite:attribute name="show" default="true" />
 </composite:interface>
 <composite:implementation>
     <ui:fragment rendered="#{cc.attrs.card != null}">
-        <p:commandLink  onsuccess="update" rendered="#{cc.attrs.interactive and cc.attrs.card.playable}" action="#{gameBean.playCard(cc.attrs.card)}" update="@form">
-            <div class="card">
-                <h:graphicImage alt="" styleClass="front" name="#{cc.attrs.card.resourcePath}.png" />
-            </div>
-        </p:commandLink>
-        <ui:fragment rendered="#{not cc.attrs.interactive or not cc.attrs.card.playable}">
-            <div class="card #{cc.attrs.interactive ? 'unplayable' : ''}">
-                <h:graphicImage alt="" styleClass="front" name="#{cc.attrs.card.resourcePath}.png" />
+        <ui:fragment rendered="#{cc.attrs.show}">
+            <p:commandLink onsuccess="update" rendered="#{cc.attrs.interactive and cc.attrs.card.playable}" action="#{gameBean.playCard(cc.attrs.card)}" update="@form">
+                <div class="card">
+                    <h:graphicImage alt="" styleClass="front" name="#{cc.attrs.card.resourcePath}.png" />
+                </div>
+            </p:commandLink>
+            <ui:fragment rendered="#{not cc.attrs.interactive or not cc.attrs.card.playable}">
+                <div class="card #{cc.attrs.interactive ? 'unplayable' : ''}">
+                    <h:graphicImage alt="" styleClass="front" name="#{cc.attrs.card.resourcePath}.png" />
+                </div>
+            </ui:fragment>
+        </ui:fragment>
+        <ui:fragment rendered="#{not cc.attrs.show}">
+            <!-- card ain't shown -->
+            <div class="card facedown">
+                <div class="back"></div>
             </div>
         </ui:fragment>
     </ui:fragment>
