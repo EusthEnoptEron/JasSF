@@ -3,28 +3,28 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui" >
 
-<h:head>
-    <title>#{messages.loginTitle}</title>
-</h:head>
 <ui:composition template="/template/layout.xhtml">
+    <ui:define name="head">
+        <title>#{messages.newGameTitle}</title>
+    </ui:define>
     <ui:define name="content">
-        <h2>New game</h2>
+        <h2>#{messages.newGameTitle}</h2>
         <h:form id="gameForm" styleClass="form-horizontal">
             <div class="form-group">
-                <h:outputLabel for="title" styleClass="col-sm-2 control-label">Name of the channel</h:outputLabel>
+                <h:outputLabel for="title" styleClass="col-sm-2 control-label">#{messages.newGameName}</h:outputLabel>
                 <div class="col-sm-10">
                     <p:inputText id="title" value="#{gameBean.title}"  styleClass="form-control" />
                 </div>
             </div>
 
             <div class="form-group">
-                <h:outputLabel for="score" styleClass="col-sm-2 control-label">Score to win</h:outputLabel>
+                <h:outputLabel for="score" styleClass="col-sm-2 control-label">#{messages.overviewMaxScore}</h:outputLabel>
                 <div class="col-sm-10">
                     <p:spinner id="score" value="#{gameBean.maxScore}" min="50" max="2000" />
                 </div>
             </div>
             <div class="col-sm-offset-2 col-sm-10">
-                <p:commandButton ajax="false" action="#{gameBean.create}" value="Create" />
+                <p:commandButton ajax="false" action="#{gameBean.create}" value="#{messages.newGameCreate}" />
             </div>
         </h:form>
     </ui:define>

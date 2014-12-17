@@ -1,15 +1,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html">
-
-<h:head>
-    <title>#{messages.loginTitle}</title>
-</h:head>
 <ui:composition template="/template/layout.xhtml">
+    <ui:define name="head">
+        <title>#{messages.loginTitle}</title>
+    </ui:define>
     <ui:define name="content">
         <h:form id="helloForm">
-            <h2>#{messages.loginGreetings}</h2>
-
+            <h2>#{messages.loginTitle}</h2>
+            <div class="alert alert-info">#{messages.loginGreetings}</div>
             #{messages.loginUsername}: <h:inputText id="username"
                                                     value="#{loginBean.name}"/><br/>
             #{messages.loginPassword}: <h:inputSecret id="password"

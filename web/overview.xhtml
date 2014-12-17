@@ -2,21 +2,22 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html" xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <title>#{messages.loginTitle}</title>
-</h:head>
+
 <ui:composition template="/template/layout.xhtml">
+    <ui:define name="head">
+        <title>#{messages.overviewTitle}</title>
+    </ui:define>
     <ui:define name="content">
         <h:form id="helloForm">
-            <h2>Overview</h2>
+            <h2>#{messages.overviewTitle}</h2>
 
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Players</th>
-                        <th>Name</th>
-                        <th>Max Score</th>
-                        <th>Creator</th>
+                        <th>#{messages.overviewPlayers}</th>
+                        <th>#{messages.overviewName}</th>
+                        <th>#{messages.overviewMaxScore}</th>
+                        <th>#{messages.overviewCreator}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,9 +36,9 @@
                 </tbody>
             </table>
             <ui:fragment rendered="#{not gameListBean.hasGames()}">
-                <div class="alert alert-success">There are currently no games running.</div>
+                <div class="alert alert-success">#{messages.overviewNoGamesRunning}</div>
             </ui:fragment>
-            <p:commandButton value="New Game" action="#{gameBean.startCreation}" ajax="false" icon="ui-icon-document">
+            <p:commandButton value="#{messages.overviewNewGame}" action="#{gameBean.startCreation}" ajax="false" icon="ui-icon-document">
                 <f:actionListener type="org.bfh.jass.game.GameExitEvent"/>
             </p:commandButton>
         </h:form>
