@@ -12,50 +12,41 @@
     </ui:define>
     <ui:define name="content">
         <h:form id="gameForm">
-            <ui:fragment id="update-region">
-            <ui:fragment rendered="#{gameBean.mustPickTrump()}">
-                <div class="modal fade in" style="display: block">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Choose trump</h4>
-                            </div>
-                            <div class="modal-body row" id="trump-picker">
-                                <p:commandLink styleClass="spades big col-md-3" action="#{gameBean.pickSpades}" value="♠" update="@form" />
-                                <p:commandLink styleClass="clubs big col-md-3" action="#{gameBean.pickClubs}" value="♣" update="@form" />
-                                <p:commandLink styleClass="hearts big col-md-3" action="#{gameBean.pickHearts}" value="♥" update="@form" />
-                                <p:commandLink styleClass="diamonds big col-md-3" action="#{gameBean.pickDiamonds}" value="♦" update="@form" />
-                            </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-            </ui:fragment>
+            <f:event type="preRenderView" listener="#{gameBean.checkForAbort}" />
 
-            <ui:fragment rendered="#{gameBean.over}">
-                <div class="modal fade in" id="gameover-modal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Game Over</h4>
-                            </div>
-                            <h2 class="modal-body" id="closing-modal">
-                                <p>#{gameBean.winner1.name} and #{gameBean.winner2.name} have
-                                    won the game.</p>
+            <j:modal title="Choose Trump" rendered="#{gameBean.mustPickTrump()}">
+                <div class="modal-body row" id="trump-picker">
+                    <p:commandLink styleClass="spades big col-md-3" action="#{gameBean.pickSpades}" value="♠" update="@form"  oncomplete="update" />
+                    <p:commandLink styleClass="clubs big col-md-3" action="#{gameBean.pickClubs}" value="♣" update="@form" oncomplete="update" />
+                    <p:commandLink styleClass="hearts big col-md-3" action="#{gameBean.pickHearts}" value="♥" update="@form" oncomplete="update" />
+                    <p:commandLink styleClass="diamonds big col-md-3" action="#{gameBean.pickDiamonds}" value="♦" update="@form" oncomplete="update" />
+                </div>
+            </j:modal>
 
-                            </h2>
-                            <div class="modal-footer">
-                                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-                                <h:commandLink styleClass="btn btn-primary" action="overview?faces-redirect=true" value="Back to Overview">
-                                    <f:actionListener type="org.bfh.jass.game.GameExitEvent"/>
-                                </h:commandLink>
-                            </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-                <script type="text/javascript">
-                    update();
-                </script>
-            </ui:fragment>
+            <j:modal title="Game Over" rendered="#{gameBean.over}">
+                <h2 class="modal-body" id="closing-modal">
+                    #{gameBean.winner1.name} and #{gameBean.winner2.name} have
+                    won the game.
+                </h2>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                    <h:commandLink styleClass="btn btn-primary" action="overview?faces-redirect=true" value="Back to Overview">
+                        <f:actionListener type="org.bfh.jass.game.GameExitEvent"/>
+                    </h:commandLink>
+                </div>
+            </j:modal>
+
+            <j:modal title="Aborted" rendered="#{gameBean.aborted}">
+                <div class="modal-body">
+                    Someone has left the game.
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                    <h:commandLink styleClass="btn btn-primary" action="overview?faces-redirect=true" value="Back to Overview">
+                        <f:actionListener type="org.bfh.jass.game.GameExitEvent"/>
+                    </h:commandLink>
+                </div>
+            </j:modal>
 
             <div class="row">
                 <!-- PLAYER TOP -->
@@ -117,10 +108,9 @@
                     <j:playerCards player="#{gameBean.player}" showCards="true"/>
                 </div>
             </div>
-            </ui:fragment>
         </h:form>
         <h:form id="poll-form">
-            <p:poll interval="2" update=":gameForm" widgetVar="poll" listener="#{gameBean.demandReaction}" onsuccess="update" />
+            <p:poll interval="2" update=":gameForm" widgetVar="poll" listener="#{gameBean.demandReaction}" oncomplete="update()" />
         </h:form>
     </ui:define>
 </ui:composition>
