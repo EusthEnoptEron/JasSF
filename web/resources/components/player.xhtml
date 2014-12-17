@@ -8,25 +8,24 @@
       xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html">
 <composite:interface>
     <composite:attribute name="player" required="true" type="org.bfh.jass.game.PlayerBean"/>
-    <composite:attribute name="showCards" required="false" type="java.lang.Boolean" default="true"/>
+    <composite:attribute name="showCards" required="false" type="java.lang.Boolean" default="false"/>
     <composite:attribute name="interactive" required="false" type="java.lang.Boolean" default="true"/>
 </composite:interface>
 <composite:implementation>
     <div class="player-card">
         <div class="avatar #{cc.attrs.player.team} glyphicon glyphicon-user #{cc.attrs.player.acting ? 'active' : ''}">
         </div>
-        <h:outputText value="#{cc.attrs.player.name}" styleClass="name" />
+        <h:outputText value="#{cc.attrs.player.name}" styleClass="name"/>
         <span class="score-display">
-            <h:outputText value="#{cc.attrs.player.score}" styleClass="score" />/<h:outputText value="#{gameBean.maxScore}" />
+            <h:outputText value="#{cc.attrs.player.score}" styleClass="score"/>/<h:outputText
+                value="#{gameBean.maxScore}"/>
         </span>
     </div>
     <!--url="#{resource['redlight.gif']}" alt="Traffic Light" />-->
-    <ui:fragment rendered="#{cc.attrs.showCards}">
-        <div class="cards">
-            <ui:repeat value="#{cc.attrs.player.cards}" var="card">
-                <j:card card="#{card}" interactive="#{cc.attrs.interactive}"/>
-            </ui:repeat>
-        </div>
-    </ui:fragment>
+    <div class="cards">
+        <ui:repeat value="#{cc.attrs.player.cards}" var="card">
+            <j:card card="#{card}" interactive="#{cc.attrs.interactive}" show="#{cc.attrs.showCards}"/>
+        </ui:repeat>
+    </div>
 </composite:implementation>
 </html>

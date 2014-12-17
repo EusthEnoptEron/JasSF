@@ -35,7 +35,7 @@
                 </tbody>
             </table>
             <ui:fragment rendered="#{not gameListBean.hasGames()}">
-                <div class="alert">There are currently no games running.</div>
+                <div class="alert alert-success">There are currently no games running.</div>
             </ui:fragment>
             <p:commandButton value="New Game" action="#{gameBean.startCreation}" ajax="false" icon="ui-icon-document">
                 <f:actionListener type="org.bfh.jass.game.GameExitEvent"/>

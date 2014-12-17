@@ -11,6 +11,7 @@
     <h:outputScript name="jquery-2.1.1.min.js" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Patrick+Hand+SC' rel='stylesheet' type='text/css'>-->
     <ui:insert name="head" />
 </h:head>
 
@@ -34,7 +35,11 @@
                     <ui:fragment rendered="#{loginBean.loggedIn}">
                         <li class="#{view.viewId == '/overview.xhtml' ? 'active' : ''}"><h:outputLink value="overview.xhtml">Overview</h:outputLink></li>
                         <li class="#{view.viewId == '/modify.xhtml' ? 'active' : ''}"><h:outputLink value="modify.xhtml">Profile</h:outputLink></li>
-                        <li><h:outputLink>Logout</h:outputLink></li>
+                        <li>
+                            <h:commandLink action="login?faces-redirect=true" value="Logout">
+                                <f:actionListener type="org.bfh.jass.user.LogoutActionEvent"/>
+                            </h:commandLink>
+                        </li>
                     </ui:fragment>
                     <li class="dropdown navbar-right">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{messages[loginBean.localeString]} <span class="caret"></span></a>

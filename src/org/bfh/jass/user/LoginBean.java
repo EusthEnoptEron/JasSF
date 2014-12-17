@@ -8,6 +8,7 @@
 
 package org.bfh.jass.user;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
@@ -83,7 +84,7 @@ public class LoginBean implements Serializable {
 		dateOfBirth = user.getDateOfBirth();
 		System.out.println("login accepted");
 		greeting="Welcome";
-		return "hidden?faces-redirect=true";
+		return "overview?faces-redirect=true";
 
 		//if (name!=null && password!=null && name.equals("Emmanuel") && password.equals("Emmanuel"))
 
@@ -115,7 +116,7 @@ public class LoginBean implements Serializable {
 			user.setPassword(password);
 			user.setDateOfBirth(dateOfBirth);
 			user.commitChanges();
-			return "hidden?faces-redirect=true";
+			return "overview?faces-redirect=true";
 		}
 		return "login?faces-redirect=true";
 	}
@@ -124,7 +125,7 @@ public class LoginBean implements Serializable {
 			name = user.getUsername();
 			password = user.getPassword();
 			dateOfBirth = user.getDateOfBirth();
-			return "hidden?faces-redirect=true";
+			return "overview?faces-redirect=true";
 		}
 		return "login?faces-redirect=true";
 	}
