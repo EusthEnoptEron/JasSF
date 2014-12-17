@@ -3,6 +3,14 @@ body {
     background: url(wood_1.png);
 }
 
+.player-card {
+    float: left;
+    margin: 10px;
+}
+
+.player-card .name {
+    display: block;
+}
 #main-content {
     background: url(bgnoise_lg.png);
     border-radius: 2em/1em;
@@ -90,6 +98,10 @@ input.form-control, input.form-control:focus {
     overflow: visible;
 }
 
+.player .cards, .player-opposite .cards {
+    height: 140px;
+    padding: 5px;
+}
 #player-left {
 }
 
@@ -188,6 +200,10 @@ input.form-control, input.form-control:focus {
     /*transform-origin: center;*/
 }
 
+#player-left .card, #player-right .card {
+    margin-right: -80px;
+}
+
 .name {
     font-size: 2em;
     line-height: 1em;
@@ -241,4 +257,30 @@ input.form-control, input.form-control:focus {
     box-shadow: inset 0 0 109px #333;
     font-family: 'Coming Soon', cursive;
     text-shadow: -1px -1px 1px black;
+}
+
+
+#player-left .avatar, #player-right .avatar, #player-opposite .avatar {
+    color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#player-left .avatar {
+    background-image: url(avatars/player-2.jpg);
+}
+#player-left .avatar.active {
+    background-image: url(avatars/player-2-active.jpg);
+}
+#player-right .avatar {
+    background-image: url(avatars/player-4.jpg);
+}
+#player-right .avatar.active {
+    background-image: url(avatars/player-4-active.jpg);
+}
+#player-opposite .avatar {
+    background-image: url(avatars/player-3.jpg);
+}
+#player-opposite .avatar.active {
+    background-image: url(avatars/player-3-active.jpg);
 }

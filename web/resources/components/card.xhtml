@@ -13,7 +13,7 @@
 <composite:implementation>
     <ui:fragment rendered="#{cc.attrs.card != null}">
         <ui:fragment rendered="#{cc.attrs.show}">
-            <p:commandLink  onsuccess="update" rendered="#{cc.attrs.interactive and cc.attrs.card.playable}" action="#{gameBean.playCard(cc.attrs.card)}" update="@form">
+            <p:commandLink onsuccess="update" rendered="#{cc.attrs.interactive and cc.attrs.card.playable}" action="#{gameBean.playCard(cc.attrs.card)}" update="@form">
                 <div class="card">
                     <h:graphicImage alt="" styleClass="front" name="#{cc.attrs.card.resourcePath}.png" />
                 </div>

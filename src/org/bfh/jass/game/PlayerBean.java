@@ -29,6 +29,7 @@ public class PlayerBean {
 	}
 
 	public CardBean getPlayedCard() {
+		if(player == null) return null;
 		Map<Player, Card> cards = player.getGame().getRound().getCardsOnTable();
 		Card myCard = cards.get(player);
 		if(myCard == null)
