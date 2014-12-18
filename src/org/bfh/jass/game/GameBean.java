@@ -4,11 +4,13 @@ import org.bfh.jass.user.LoginBean;
 import org.bfh.jass.user.User;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
@@ -243,5 +245,17 @@ public class GameBean implements Serializable {
 	public void takeSlot(int slot) {
 		game.setPlayer(slot, player);
 	}
+	public boolean checkForAbort(ComponentSystemEvent event) {
+		if(game == null || game.getState().ordinal() < Game.GameState.PLAYING.ordinal()) {
+			try {
+				FacesContext.getCurrentInstance().getExternalContext()
+						.redirect("overview.xhtml?faces-redirect=true");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return false;
 
+		}
+		return true;
+	}
 }

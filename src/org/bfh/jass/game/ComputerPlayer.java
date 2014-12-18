@@ -3,22 +3,30 @@ package org.bfh.jass.game;
 import java.util.Random;
 
 /**
- * Created by Simon on 2014/12/04.
+ * A stupid computer player that can participate in a game in place of a human.
  */
 public class ComputerPlayer extends Player {
 	private Random random;
 	private static final String[] NAMES = new String[] {
 			"Rudi", "Hans", "Sepp", "Anton"
 	};
+
+	/**
+	 * Creates a new computer player for a specific game.
+	 * @param game
+	 */
 	public ComputerPlayer(Game game) {
 		super(game);
 
 		random = new Random();
 	}
 
+	/**
+	 * React by either picking a trump or playing a card.
+	 */
 	@Override
 	public void react() {
-		GameRound.GameRoundState state = getGame().getRound().state;
+		GameRound.GameRoundState state = getGame().getRound().getState();
 		if(state == GameRound.GameRoundState.PICKING) {
 			pickTrump();
 		} else if(state == GameRound.GameRoundState.PLAYING) {
@@ -26,6 +34,10 @@ public class ComputerPlayer extends Player {
 		}
 	}
 
+	/**
+	 * Gets the name of the player.
+	 * @return
+	 */
 	@Override
 	public String getName() {
 		return NAMES[getSlot()] + " (Computer)";

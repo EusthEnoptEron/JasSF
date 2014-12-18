@@ -7,10 +7,14 @@ import org.bfh.jass.user.User;
 import java.util.*;
 
 /**
- * Created by Simon on 2014/11/27.
+ * Represents a game round of 9 steps that starts with picking a trump and ends when all cards have been played.
  */
 public class GameRound {
 
+	/**
+	 * Gets the current state of the round.
+	 * @return
+	 */
 	public GameRoundState getState() {
 		return state;
 	}
@@ -20,23 +24,25 @@ public class GameRound {
 		PLAYING
 	}
 
-	public static final int MAX_STEPS = 9;
 	private Game game;
-
 	public CardSuit getTrump() {
 		return trump;
 	}
-
 	private CardSuit trump;
 
 	// Linked to preserve insertion order.
 	private LinkedHashMap<Player, Card> cards = new LinkedHashMap<Player, Card>();
 	private int step = 0;
 
-	GameRoundState state;
+	private GameRoundState state;
 
 	private Player currentPlayer = null;
 
+	/**
+	 * Starts a new game round in a game with a player starting.
+	 * @param game
+	 * @param startingPlayer
+	 */
 	public GameRound(Game game, Player startingPlayer) {
 		this.game = game;
 		currentPlayer = startingPlayer;
@@ -53,12 +59,15 @@ public class GameRound {
 		return currentPlayer;
 	}
 
+	/**
+	 * Picks a trump.
+	 * @param player the player that sent the command
+	 * @param trump
+	 */
 	public void pickTrump(Player player, CardSuit trump) {
-		if(state == GameRoundState.PICKING) {
-			if (player == getCurrentPlayer()) {
-				this.trump = trump;
-				state = GameRoundState.PLAYING;
-			}
+		if(state == GameRoundState.PICKING && player == currentPlayer) {
+			this.trump = trump;
+			state = GameRoundState.PLAYING;
 		}
 	}
 
@@ -71,17 +80,19 @@ public class GameRound {
 		return Collections.unmodifiableMap(cards);
 	}
 
+	/**
+	 * Plays a card.
+	 * @param player the player that sent the command
+	 * @param card
+	 */
 	public void playCard(Player player, Card card) {
-		if (state == GameRoundState.PLAYING) {
+		if (state == GameRoundState.PLAYING && player == currentPlayer) {
+			if (player.isPlayable(card)) {
+				System.out.println(String.format("Player %d plays %s", game.getPlayerSlot(player), card));
+				cards.put(player, card);
+				player.removeCard(card);
 
-			if (player == getCurrentPlayer()) {
-				if (isPlayable(card)) {
-					System.out.println(String.format("Player %d plays %s", game.getPlayerSlot(player), card));
-					cards.put(player, card);
-					player.removeCard(card);
-
-					goToNextPlayer();
-				}
+				goToNextPlayer();
 			}
 		}
 	}
@@ -114,7 +125,6 @@ public class GameRound {
 	}
 
 	public boolean isPlayable(Card card) {
-
 		return true;
 	}
 

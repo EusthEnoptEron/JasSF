@@ -11,17 +11,9 @@ import java.security.*;
 import java.security.spec.*;
 
 
-/*
-TO DO: Change the insert method for accessing the date.
-Must update the id.
-
-Remove the Tester  and the Connect classes
-
-Write a Login page, then a hidden page, then a register page
-
+/**
+ * UserAccessor to fetch user data from the DB.
  */
-
-
 public class UserAccessor {
 
 	private static UserAccessor currentInstance;
@@ -42,6 +34,11 @@ public class UserAccessor {
 		return currentInstance;
 	}
 
+	/**
+	 * Gets a username from the database.
+	 * @param username name of the user
+	 * @return user object
+	 */
 	public User getUser(String username) {
 		if (userMap.containsKey(username)) {
 			return userMap.get(username);
