@@ -42,20 +42,20 @@
                         </li>
                     </ui:fragment>
                     <li class="dropdown navbar-right">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{messages[loginBean.localeString]} <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{loginBean.localeString} <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <h:commandLink id="fr" value="#{messages.french}" rendered="#{loginBean.locale != 'fr'}">
+                                    <h:commandLink id="fr" value="Français" rendered="#{loginBean.locale != 'fr'}">
                                         <f:actionListener type="org.bfh.jass.user.LanguageChangedActionEvent"/>
                                     </h:commandLink>
                                 </li>
                                 <li>
-                                    <h:commandLink id="de" value="#{messages.german}" rendered="#{loginBean.locale != 'de'}">
+                                    <h:commandLink id="de" value="Deutsch" rendered="#{loginBean.locale != 'de'}">
                                         <f:actionListener type="org.bfh.jass.user.LanguageChangedActionEvent"/>
                                     </h:commandLink>
                                 </li>
                                 <li>
-                                    <h:commandLink id="en" value="#{messages.english}" rendered="#{loginBean.locale != 'en'}">
+                                    <h:commandLink id="en" value="English" rendered="#{loginBean.locale != 'en'}">
                                         <f:actionListener type="org.bfh.jass.user.LanguageChangedActionEvent"/>
                                     </h:commandLink>
                                 </li>
