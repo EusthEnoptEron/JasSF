@@ -24,6 +24,7 @@ public class HumanPlayer extends Player {
 		return userId;
 	}
 
+	@Override
 	public User getUser() {
 		if(user == null) user = UserAccessor.getCurrentInstance().getUser(userId);
 		return user;

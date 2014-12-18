@@ -4,13 +4,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 /**
- * Created by Simon on 2014/11/20.
+ * Manager that handles the DB connection.
  */
 public class DatabaseManager {
 	private static Connection conn = null;
-
 	private DatabaseManager(){}
 
+	/**
+	 * Gets the connection to the DB.
+	 * @return the connection to the DB.
+	 */
 	public static Connection getConnection() {
 		if(conn == null) {
 			try {
@@ -22,7 +25,7 @@ public class DatabaseManager {
 				conn = DriverManager.getConnection(url, userName, password);
 				System.out.println("Database connection established");
 			} catch (Exception e) {
-				System.err.println("Cannot connect to database server" + e.toString());
+				System.out.println("Cannot connect to database server" + e.toString());
 			}
 		}
 		return conn;
