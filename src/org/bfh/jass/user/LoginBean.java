@@ -146,7 +146,7 @@ public class LoginBean implements Serializable {
 	}
 
 	public boolean isLoggedIn() {
-		return user == null;
+		return user != null;
 	}
 
 	
