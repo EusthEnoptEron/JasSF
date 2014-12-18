@@ -7,6 +7,8 @@ import java.lang.String;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.security.*;
+import java.security.spec.*;
 
 public class User {
 	int id;
@@ -14,6 +16,7 @@ public class User {
 	String username;
 
 	String password;
+	String salt;
 
 	Date dateOfBirth;
 	private Set<Card> cards = new HashSet<Card>();
@@ -22,7 +25,16 @@ public class User {
 	protected User(int id, String u, String p, Date d) {
 		this.id = id;
 		username = u;
-		password = p;
+		
+		this.password = p;
+		/*try
+		{
+			this.password = Encryptor.createHash(p.toCharArray());
+		}
+		catch(NoSuchAlgorithmException | InvalidKeySpecException e)
+		{
+			e.printStackTrace();
+		}*/
 		dateOfBirth = d;
 	}
 
@@ -44,6 +56,14 @@ public class User {
 
 	public void setPassword(String pwd) {
 		this.password = pwd;
+		/*try
+		{
+			this.password = Encryptor.createHash(pwd.toCharArray());
+		}
+		catch(NoSuchAlgorithmException | InvalidKeySpecException e)
+		{
+			e.printStackTrace();
+		}*/
 	}
 
 	public String getPassword() {

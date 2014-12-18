@@ -13,6 +13,8 @@ import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.util.Date;
 import javax.faces.context.FacesContext;
+import java.security.*;
+import java.security.spec.*;
 
 @ManagedBean
 @SessionScoped
@@ -72,15 +74,30 @@ public class LoginBean implements Serializable {
 	public String login(){
 		user = UserAccessor.getCurrentInstance().getUser(name);
 		System.out.println("Access to login");
-		if(user == null || !user.getPassword().equals(password)){
+		boolean pwCheck = false;
+		
+		if(user != null)
+		{
+		try
+		{
+			pwCheck = Encryptor.validatePassword(password, user.getPassword());
+		}
+		catch(NoSuchAlgorithmException | InvalidKeySpecException e)
+		{
+			e.printStackTrace();
+		}
+			if(pwCheck)
+			{
+				dateOfBirth = user.getDateOfBirth();
+				System.out.println("login accepted");
+				greeting="Welcome";
+				return "hidden?faces-redirect=true";
+			}
+		}
 			System.out.println("login refused");
 			greeting="Login impossible (wrong username or Password)";
 			return "login?faces-redirect=true";
-		}
-		dateOfBirth = user.getDateOfBirth();
-		System.out.println("login accepted");
-		greeting="Welcome";
-		return "hidden?faces-redirect=true";
+
 
 		//if (name!=null && password!=null && name.equals("Emmanuel") && password.equals("Emmanuel"))
 
