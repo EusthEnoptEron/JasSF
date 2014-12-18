@@ -26,7 +26,7 @@ public class ComputerPlayer extends Player {
 	 */
 	@Override
 	public void react() {
-		GameRound.GameRoundState state = getGame().getRound().state;
+		GameRound.GameRoundState state = getGame().getRound().getState();
 		if(state == GameRound.GameRoundState.PICKING) {
 			pickTrump();
 		} else if(state == GameRound.GameRoundState.PLAYING) {
