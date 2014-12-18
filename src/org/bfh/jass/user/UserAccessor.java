@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Date;
 import java.sql.*;
+import java.security.*;
+import java.security.spec.*;
+
 
 /*
 TO DO: Change the insert method for accessing the date.
@@ -71,7 +74,8 @@ public class UserAccessor {
 
 				s = conn.prepareStatement(sql);
 				s.setString(1, username);
-				s.setString(2, password);
+				s.setString(2, Encryptor.createHash(password));
+								
 				java.sql.Date sqlDate = new java.sql.Date(dateOfBirth.getTime());
 				//String myString = DateFormat.getDateInstance(DateFormat.SHORT).format(dateOfBirth);
 
@@ -80,7 +84,7 @@ public class UserAccessor {
 				s.executeUpdate();
 				s.close();
 				return getUser(username);
-			} catch (SQLException e) {
+			} catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
 				System.out.println(e);
 			}
 
