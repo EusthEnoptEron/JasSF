@@ -82,31 +82,25 @@ public class LoginBean implements Serializable {
 		
 		if(user != null)
 		{
-		try
-		{
-			pwCheck = Encryptor.validatePassword(password, user.getPassword());
-		}
-		catch(NoSuchAlgorithmException | InvalidKeySpecException e)
-		{
-			e.printStackTrace();
-		}
+			try
+			{
+				pwCheck = Encryptor.validatePassword(password, user.getPassword());
+			}
+			catch(NoSuchAlgorithmException | InvalidKeySpecException e)
+			{
+				e.printStackTrace();
+			}
 			if(pwCheck)
 			{
 				dateOfBirth = user.getDateOfBirth();
 				System.out.println("login accepted");
 				greeting="Welcome";
-				return "hidden?faces-redirect=true";
+				return "overview?faces-redirect=true";
 			}
 		}
-			System.out.println("login refused");
-			greeting="Login impossible (wrong username or Password)";
-			return "login?faces-redirect=true";
-		}
-		dateOfBirth = user.getDateOfBirth();
-		System.out.println("login accepted");
-		greeting="Welcome";
-		return "overview?faces-redirect=true";
-
+		System.out.println("login refused");
+		greeting="Login impossible (wrong username or Password)";
+		return "login?faces-redirect=true";
 		//if (name!=null && password!=null && name.equals("Emmanuel") && password.equals("Emmanuel"))
 
 	}
@@ -151,4 +145,19 @@ public class LoginBean implements Serializable {
 		return "login?faces-redirect=true";
 	}
 
+	public boolean isLoggedIn() {
+		return user == null;
+	}
+
+	
+	public String getLocaleString() {
+		String locale = getLocale();
+
+		if(locale.equals("de"))
+			return "german";
+		if(locale.equals("fr"))
+			return "french";
+		else
+			return "english";
+	}
 }
