@@ -8,39 +8,33 @@ import org.bfh.jass.user.User;
  * Time: 10:32
  */
 public class GameResult {
-	User[] team1;
-	User[] team2;
 
-	int team1Score;
-	int team2Score;
-
+	GameResult.Team[] teams;
 	int requiredScore;
-
 	User creator;
 
-	public GameResult(User[] team1, User[] team2, int team1Score, int team2Score, int requiredScore, User creator) {
-		this.team1 = team1;
-		this.team2 = team2;
-		this.team1Score = team1Score;
-		this.team2Score = team2Score;
+	public GameResult(GameResult.Team[] teams, int requiredScore, User creator) {
+		this.teams = teams;
 		this.requiredScore = requiredScore;
 		this.creator = creator;
 	}
 
-	public User[] getTeam1() {
-		return team1;
+	public GameResult.Team getTeam(int index) {
+		return teams[index];
 	}
 
-	public User[] getTeam2() {
-		return team2;
+	public Team[] getTeams() {
+		return teams;
 	}
 
-	public int getTeam1Score() {
-		return team1Score;
-	}
-
-	public int getTeam2Score() {
-		return team2Score;
+	public Team getWinningTeam() {
+		Team winner = null;
+		for(Team team: teams) {
+			if(winner == null || team.getScore() > winner.getScore()) {
+				winner = team;
+			}
+		}
+		return winner;
 	}
 
 	public int getRequiredScore() {
@@ -49,5 +43,48 @@ public class GameResult {
 
 	public User getCreator() {
 		return creator;
+	}
+
+
+	public static class Team {
+		private int id;
+		private User[] users;
+		private int score;
+
+		public Team(int id, User[] users, int score) {
+			this.id = id;
+			this.users = users;
+			this.score = score;
+		}
+
+		public Team(int id, Player[] players, int score) {
+			users = new User[players.length];
+			for(int i = 0; i < players.length; i++) {
+				users[i] = players[i].getUser();
+			}
+
+			this.id  = id;
+			this.score = score;
+		}
+
+		public User[] getUsers() {
+			return users;
+		}
+
+		public void setUsers(User[] users) {
+			this.users = users;
+		}
+
+		public int getScore() {
+			return score;
+		}
+
+		public void setScore(int score) {
+			this.score = score;
+		}
+
+		public int getId() {
+			return id;
+		}
 	}
 }

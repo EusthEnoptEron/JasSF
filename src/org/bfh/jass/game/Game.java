@@ -72,7 +72,7 @@ public class Game {
 			for(int i = 0; i < players.length; i++) {
 				if(players[i] == null)
 					players[i] = new ComputerPlayer(this);
-				players[i].setTeam( i % 2 == 0 ? Team.EVEN : Team.ODD );
+//				players[i].setTeam( i % 2 == 0 ? Team.EVEN : Team.ODD );
 
 			}
 
@@ -146,17 +146,13 @@ public class Game {
 					: Team.ODD
 			);
 
-//			Player[] evenPlayers = getPlayers(Team.EVEN);
-//			Player[] oddPlayers  = getPlayers(Team.ODD);
-//			result = new GameResult(
-//					new User[]{
-//							evenPlayers[0].getUser(),
-//							evenPlayers[1].getUser()
-//					},
-//					new User[] {
-//							oddPlayers[0].getUser(),
-//							oddPlayers[1].getUser()
-//					}, getScore(Team.EVEN), getScore(Team.ODD), score, creator);
+			Player[] evenPlayers = getPlayers(Team.EVEN);
+			Player[] oddPlayers  = getPlayers(Team.ODD);
+			result = new GameResult(
+					new GameResult.Team[]{
+						new GameResult.Team(Team.EVEN.ordinal(), evenPlayers, getScore(Team.EVEN)),
+						new GameResult.Team(Team.ODD.ordinal(), oddPlayers, getScore(Team.ODD))
+					}, score, creator);
 
 			GameManager.getInstance().closeGame(this);
 		} else {
