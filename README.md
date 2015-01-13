@@ -22,3 +22,9 @@ Jass webapp made with JSF.
 - [Course website] (http://www.benoist.ch/coursAWT/)
 - [Specifications] (http://www.benoist.ch/coursAWT/exercises/homework-HS1415.php)
 - [Game rules] (http://de.wikipedia.org/wiki/Jass)
+
+## Halp
+
+### STRANGE THINGS R HAPPENIN.
+
+Try clearing the webapps folder. There might still be some old stuff.
