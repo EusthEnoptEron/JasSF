@@ -36,9 +36,9 @@ DELETE FROM `games`;
 -- Dumping structure for table jass.teams
 DROP TABLE IF EXISTS `teams`;
 CREATE TABLE IF NOT EXISTS `teams` (
-  `id` int(11) NOT NULL,
-  `score` int(11) NOT NULL,
-  `gameId` int(11) NOT NULL,
+  `id` int(10) NOT NULL,
+  `score` int(10) NOT NULL,
+  `gameId` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_teams_games` (`gameId`),
   CONSTRAINT `FK_teams_games` FOREIGN KEY (`gameId`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
