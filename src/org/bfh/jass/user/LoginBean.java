@@ -191,10 +191,10 @@ public class LoginBean implements Serializable {
 		String locale = getLocale();
 
 		if(locale.equals("de"))
-			return "german";
+			return "Deutsch";
 		if(locale.equals("fr"))
-			return "french";
+			return "Français";
 		else
-			return "english";
+			return "English";
 	}
 }
