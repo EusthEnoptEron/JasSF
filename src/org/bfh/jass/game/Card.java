@@ -5,7 +5,8 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * Created by Simon on 2014/11/27.
+ * Represents a card that can be played.
+ * Is defined by a rank and a suit.
  */
 public class Card {
 	private CardRank rank;
@@ -41,14 +42,27 @@ public class Card {
 		this.suit = suit;
 	}
 
+	/**
+	 * Gets the rank of this card.
+	 * @return
+	 */
 	public CardRank getRank() {
 		return rank;
 	}
 
+	/**
+	 * Gets the suit of this card.
+	 * @return
+	 */
 	public CardSuit getSuit() {
 		return suit;
 	}
 
+	/**
+	 * Gets how much this card is worth based on the current trump suit.
+	 * @param trump
+	 * @return
+	 */
 	public int getValue(CardSuit trump) {
 		if(trump == suit) {
 			switch(rank) {
@@ -72,6 +86,11 @@ public class Card {
 		}
 	}
 
+	/**
+	 * Gets the order in which one card "sticht" the other when no primary suit is defined.
+	 * @param trump
+	 * @return
+	 */
 	public int getSortOrder(CardSuit trump) {
 		if(trump != suit) {
 			switch(rank) {
@@ -102,6 +121,12 @@ public class Card {
 		return 0;
 	}
 
+	/**
+	 * Gets the order in which one card "sticht" the other.
+	 * @param trump
+	 * @param primarySuit
+	 * @return
+	 */
 	public int getSortOrder(CardSuit trump, CardSuit primarySuit) {
 		if(trump != suit && primarySuit != suit) {
 			switch(rank) {

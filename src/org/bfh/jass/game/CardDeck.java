@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created by Simon on 2014/11/27.
+ * Helper class that represents a card deck.
  */
 public class CardDeck {
 	List<Card> cards;
 	private Random random = new Random();
 
+	/**
+	 * Creates a new deck with all available cards.
+	 */
 	public CardDeck() {
 		// Generate cards
 		cards = new ArrayList<Card>();
@@ -25,6 +28,7 @@ public class CardDeck {
 	/**
 	 * Shuffles cards. Not necessary, since draw() is already randomized.
 	 * Adapted from http://bost.ocks.org/mike/shuffle/
+	 * @deprecated use {@see draw()}
 	 */
 	public void shuffle() {
 		Random random = new Random();
@@ -57,6 +61,11 @@ public class CardDeck {
 		return card;
 	}
 
+	/**
+	 * Draws a bunch of cards at once.
+	 * @param count
+	 * @return
+	 */
 	public Card[] draw(int count) {
 		Card[] cards = new Card[count];
 

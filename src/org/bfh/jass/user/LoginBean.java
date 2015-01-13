@@ -31,8 +31,6 @@ public class LoginBean implements Serializable {
 
 	private String greeting;
 
-	private String locale;
-
 	public User getUser(){
 		return user;
 	}
@@ -40,20 +38,7 @@ public class LoginBean implements Serializable {
 		this.user = user;
 	}
 
-	public String getLocale(){
-		if(locale == null){
-			FacesContext context = FacesContext.getCurrentInstance();
-			locale = context.getViewRoot().getLocale().toString();
-			String language = context.getViewRoot().getLocale().getLanguage().toLowerCase();
 
-			return language;
-		}
-		return locale;
-	}
-
-	public void setLocale(String locale){
-		this.locale = locale;
-	}
 
 	public String getName() { return name;}
 
@@ -149,15 +134,4 @@ public class LoginBean implements Serializable {
 		return user != null;
 	}
 
-	
-	public String getLocaleString() {
-		String locale = getLocale();
-
-		if(locale.equals("de"))
-			return "Deutsch";
-		if(locale.equals("fr"))
-			return "Français";
-		else
-			return "English";
-	}
 }
