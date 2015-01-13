@@ -11,6 +11,7 @@
         <h:outputScript name="game.js" />
     </ui:define>
     <ui:define name="content">
+	<f:event listener="#{loginBean.checkAuthorization}" type="preRenderView" />
         <h:form id="gameForm">
             <f:event type="preRenderView" listener="#{gameBean.checkForAbort}" />
 

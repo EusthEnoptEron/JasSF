@@ -27,14 +27,6 @@ public class User {
 		username = u;
 		
 		this.password = p;
-		/*try
-		{
-			this.password = Encryptor.createHash(p.toCharArray());
-		}
-		catch(NoSuchAlgorithmException | InvalidKeySpecException e)
-		{
-			e.printStackTrace();
-		}*/
 		dateOfBirth = d;
 	}
 
@@ -56,14 +48,6 @@ public class User {
 
 	public void setPassword(String pwd) {
 		this.password = pwd;
-		/*try
-		{
-			this.password = Encryptor.createHash(pwd.toCharArray());
-		}
-		catch(NoSuchAlgorithmException | InvalidKeySpecException e)
-		{
-			e.printStackTrace();
-		}*/
 	}
 
 	public String getPassword() {

@@ -21,7 +21,7 @@ import java.io.IOException;
 
 @ManagedBean
 @SessionScoped
-public class LoginBean implements Serializable {
+public class HistoryBean implements Serializable {
 
 	private User user;
 

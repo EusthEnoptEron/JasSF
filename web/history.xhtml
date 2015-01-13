@@ -5,25 +5,30 @@
 
 <ui:composition template="/template/layout.xhtml">
     <ui:define name="head">
-        <title>#{messages.overviewTitle}</title>
+        <title>#{messages.historyTitle}</title>
     </ui:define>
     <ui:define name="content">
 	<f:event listener="#{loginBean.checkAuthorization}" type="preRenderView" />
-        <h:form id="helloForm">
+        <h:form id="historyForm">
 		
-            <h2>#{messages.overviewTitle}</h2>
+            <h2>#{messages.historyTitle}</h2>
 
+			#{messages.historyGamesPlayed} #{historyBean.noOfGamesPlayed} <br/>
+			#{messages.historyWins} #{historyBean.wins} <br/>
+			#{messages.historyLosses} #{historyBean.losses} <br/>
+			#{messages.historyWinRatio} #{historyBean.winRatio} <br/>
+			
             <table class="table">
                 <thead>
                     <tr>
-                        <th>#{messages.overviewPlayers}</th>
-                        <th>#{messages.overviewName}</th>
-                        <th>#{messages.overviewMaxScore}</th>
-                        <th>#{messages.overviewCreator}</th>
+                        <th>#{messages.historyGameName}</th>
+                        <th>#{messages.historyPlayerName}</th>
+                        <th>#{messages.historyPlayerScore}</th>
+                        <th>#{messages.historyMaxScore}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="#{gameListBean.games}" var="game">
+                    <c:forEach items="#{history.games}" var="game">
                         <tr>
                             <td>#{game.playerCount}/4</td>
                             <td>
@@ -37,8 +42,8 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <ui:fragment rendered="#{not gameListBean.hasGames()}">
-                <div class="alert alert-success">#{messages.overviewNoGamesRunning}</div>
+            <ui:fragment rendered="#{not historyBean.hasGames()}">
+                <div class="alert alert-success">#{messages.historyNoGamesPlayedYet}</div>
             </ui:fragment>
             <p:commandButton value="#{messages.overviewNewGame}" action="#{gameBean.startCreation}" ajax="false" icon="ui-icon-document">
                 <f:actionListener type="org.bfh.jass.game.GameExitEvent"/>

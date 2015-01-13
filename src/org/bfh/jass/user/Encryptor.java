@@ -78,7 +78,7 @@ public class Encryptor
 	 * @return true if the password is correct, false if not
 	 */
 	public static boolean validatePassword(char[] password, String correctHash) throws NoSuchAlgorithmException, InvalidKeySpecException
-	{
+	{		
 		// Decode the hash into its parameters
 		String[] params = correctHash.split(":");
 		int iterations = Integer.parseInt(params[ITERATION_INDEX]);

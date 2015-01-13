@@ -10,6 +10,7 @@
 <h:body>
     <ui:composition template="/template/layout.xhtml">
         <ui:define name="content">
+		<f:event listener="#{loginBean.checkAuthorization}" type="preRenderView" />
             <h2>#{messages.registerGreetings}</h2>
 
             <h:form id="helloForm">
@@ -25,9 +26,6 @@
                 <h:commandButton id="cancelBtn" action="#{loginBean.cancel}"
                                  value="#{messages.registerCancel}"/>
                 <br/>
-                <h:commandLink id="backBtn"
-                               action="hidden?faces-redirect=true"
-                               value="#{messages.registerBack}"/><br/>
             </h:form>
         </ui:define>
     </ui:composition>
