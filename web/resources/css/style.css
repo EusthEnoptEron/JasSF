@@ -117,11 +117,11 @@ input.form-control, input.form-control:focus {
     margin-right: -50px;
     width: 100px;
     height: 136px;
-    transform-style: preserve-3d;
+    /*transform-style: preserve-3d;*/
     transition: transform 200ms;
 
     /* faceup */
-    transform: rotateY(0deg);
+    /*transform: rotateY(0deg);*/
 }
 
 .card.unplayable {
@@ -132,11 +132,11 @@ input.form-control, input.form-control:focus {
 }
 
 .card.facedown {
-    transform: rotateY(180deg);
+    /*transform: rotateY(180deg);*/
 }
 
 .card.played {
-    transform: rotateY(0deg) translate(100px, 200px);
+    /*transform: rotateY(0deg) translate(100px, 200px);*/
 }
 
 .card .back, .card .front {
@@ -150,7 +150,7 @@ input.form-control, input.form-control:focus {
 .card .back {
     /*z-index: 1;*/
     background-image: url(cards/cardBack_red4.png);
-    transform: translateZ(-1px) rotateY(180deg);
+    /*transform: translateZ(-1px) rotateY(180deg);*/
 }
 .card .front {
     /*z-index: 2;*/
