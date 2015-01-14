@@ -6,6 +6,7 @@
 <h:body>
 <ui:composition template="/template/layout.xhtml">
     <ui:define name="content">
+	<f:event listener="#{loginBean.checkAuthorization}" type="preRenderView" />
         <h:form id="responseform">
             <h2>#{messages.hiddenGreeting} #{loginBean.name}</h2>
 

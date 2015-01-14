@@ -14,9 +14,7 @@ public class User {
 	int id;
 
 	String username;
-
 	String password;
-	String salt;
 
 	Date dateOfBirth;
 	protected User(int id, String u, String p, Date d) {
@@ -24,14 +22,6 @@ public class User {
 		username = u;
 		
 		this.password = p;
-		/*try
-		{
-			this.password = Encryptor.createHash(p.toCharArray());
-		}
-		catch(NoSuchAlgorithmException | InvalidKeySpecException e)
-		{
-			e.printStackTrace();
-		}*/
 		dateOfBirth = d;
 	}
 
@@ -53,14 +43,6 @@ public class User {
 
 	public void setPassword(String pwd) {
 		this.password = pwd;
-		/*try
-		{
-			this.password = Encryptor.createHash(pwd.toCharArray());
-		}
-		catch(NoSuchAlgorithmException | InvalidKeySpecException e)
-		{
-			e.printStackTrace();
-		}*/
 	}
 
 	public String getPassword() {

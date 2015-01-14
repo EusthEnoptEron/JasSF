@@ -16,6 +16,8 @@ import java.util.Date;
 import javax.faces.context.FacesContext;
 import java.security.*;
 import java.security.spec.*;
+import javax.faces.event.ComponentSystemEvent;
+import java.io.IOException;
 
 @ManagedBean
 @SessionScoped
@@ -70,6 +72,7 @@ public class LoginBean implements Serializable {
 			try
 			{
 				pwCheck = Encryptor.validatePassword(password, user.getPassword());
+				
 			}
 			catch(NoSuchAlgorithmException | InvalidKeySpecException e)
 			{
@@ -100,6 +103,7 @@ public class LoginBean implements Serializable {
 
 			greeting = "Register OK, proceed to login";
 			System.out.println(greeting);
+			user = null;
 			return "login?faces-redirect=true";
 		}
 		catch(RuntimeException e){
@@ -113,7 +117,14 @@ public class LoginBean implements Serializable {
 	public String modify(){
 		if(user != null){
 			user.setUsername(name);
-			user.setPassword(password);
+			try
+			{
+			user.setPassword(Encryptor.createHash(password));
+			}
+			catch(NoSuchAlgorithmException | InvalidKeySpecException e)
+			{
+				e.printStackTrace();
+			}
 			user.setDateOfBirth(dateOfBirth);
 			user.commitChanges();
 			return "overview?faces-redirect=true";
@@ -129,6 +140,32 @@ public class LoginBean implements Serializable {
 		}
 		return "login?faces-redirect=true";
 	}
+	
+	public void checkAuthorization(ComponentSystemEvent event)
+	{
+		if(!isLoggedIn())
+		{
+			try {
+				FacesContext.getCurrentInstance().getExternalContext()
+						.redirect("login.xhtml?faces-redirect=true");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/*public void checkAuthorization(ComponentSystemEvent event)
+	{
+		if(!isLoggedIn())
+		{
+			try {
+				FacesContext.getCurrentInstance().getExternalContext()
+						.redirect("login.xhtml?faces-redirect=true");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}*/
 
 	public boolean isLoggedIn() {
 		return user != null;

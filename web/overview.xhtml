@@ -8,7 +8,9 @@
         <title>#{messages.overviewTitle}</title>
     </ui:define>
     <ui:define name="content">
+	<f:event listener="#{loginBean.checkAuthorization}" type="preRenderView" />
         <h:form id="helloForm">
+		
             <h2>#{messages.overviewTitle}</h2>
 
             <table class="table">

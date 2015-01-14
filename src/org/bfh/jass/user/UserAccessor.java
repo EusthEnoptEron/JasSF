@@ -97,6 +97,8 @@ public class UserAccessor {
 			String sql = "UPDATE `user` SET `username` = ?,`password` = ?,`dateOfBirth` = ? WHERE `user`.`id` =? LIMIT 1 ;";
 			s = conn.prepareStatement(sql);
 			s.setString(1, user.getUsername());
+			
+			System.out.println("pwtohash: " + user.getPassword());
 			s.setString(2, user.getPassword());
 			java.sql.Date sqlDate = new java.sql.Date(user.getDateOfBirth().getTime());
 			s.setDate(3, sqlDate);
