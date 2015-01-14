@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.bfh.jass.user.LoginBean;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.application.FacesMessage;
@@ -39,9 +40,7 @@ public class HistoryBean implements Serializable {
 
 		this.user = user;
 	}
-	
-	
-	private static HistoryBean _instance = null;
+
 	private List<Score> scores;
 	
 	private double winRatio;
@@ -49,12 +48,14 @@ public class HistoryBean implements Serializable {
 	private int lossCount;
 	private int noOfGamesPlayed;
 
-	private HistoryBean() {
-		this.scores = new ArrayList<Score>();
-		
+	@PostConstruct
+	private void init() {
+		// Get an instance of the current game the user is in.
+		this.scores = HistoryAccessor.getCurrentInstance().getScores(user.getUser().getUserID());
+		calculateWins();
 	}
-	
-	public void calculateWins()
+
+	private void calculateWins()
 	{
 		int wins = 0;
 		for(Score score : scores)
@@ -83,20 +84,14 @@ public class HistoryBean implements Serializable {
 	{
 		return this.winCount;
 	}
-	
-	public void setLossCount(int lossCount)
-	{
-		this.lossCount = lossCount;
-		calculateWinRatio();
-		calculateNoOfGamesPlayed();
-	}
-	
+
+
 	public int getLossCount()
 	{
 		return this.lossCount;
 	}
-	
-	public void calculateNoOfGamesPlayed()
+
+	private void calculateNoOfGamesPlayed()
 	{
 		this.noOfGamesPlayed = this.winCount + this.lossCount;
 	}
@@ -109,7 +104,7 @@ public class HistoryBean implements Serializable {
 	/**
 	 * Calculates the winratio for a player
 	 */
-	public void calculateWinRatio()
+	private void calculateWinRatio()
 	{
 		double div = this.lossCount;
 		if(div == 0)
@@ -124,27 +119,11 @@ public class HistoryBean implements Serializable {
 	{
 		return this.winRatio;
 	}
-	
-	/**
-	 * Gets the instance of the bean.
-	 * @return
-	 */
-	public static HistoryBean getInstance() {
-		if(_instance == null) {
-			_instance  = new HistoryBean();
-		}
-		return _instance;
+
+	public List<Score> getScores() {
+		return scores;
 	}
 
-	/**
-	 * Gets all open games.
-	 * @return
-	 */
-	public Score[] getScoresByUser(User user) {
-		this.scores = HistoryAccessor.getCurrentInstance().getScores(user.getUserID());
-		calculateWins();
-		return this.scores.toArray(new Score[scores.size()]);
-	}
 	
 	/**
 	 * Checks whether or not there are any played games.
