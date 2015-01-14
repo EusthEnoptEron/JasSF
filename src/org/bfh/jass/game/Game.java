@@ -139,21 +139,24 @@ public class Game {
 			scores.get(Team.ODD) >= score) {
 			state = GameState.CLOSING;
 
-
+			System.out.println("OK, we're done here.");
 			setWinnerTeam(
 					scores.get(Team.EVEN) > scores.get(Team.ODD)
-					? Team.EVEN
-					: Team.ODD
+							? Team.EVEN
+							: Team.ODD
 			);
 
 			Player[] evenPlayers = getPlayers(Team.EVEN);
 			Player[] oddPlayers  = getPlayers(Team.ODD);
+			System.out.println("Create result...");
+
 			result = new GameResult(
 					new GameResult.Team[]{
 						new GameResult.Team(Team.EVEN.ordinal(), evenPlayers, getScore(Team.EVEN)),
 						new GameResult.Team(Team.ODD.ordinal(), oddPlayers, getScore(Team.ODD))
 					}, score, creator);
 
+			System.out.println("Notify manager...");
 			GameManager.getInstance().closeGame(this);
 		} else {
 			trumpPicker = (trumpPicker + players.length - 1)  % players.length;
@@ -345,6 +348,10 @@ public class Game {
 				return;
 			}
 		}
+	}
+
+	public GameResult getResult() {
+		return result;
 	}
 
 

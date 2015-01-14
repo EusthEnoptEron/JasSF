@@ -22,7 +22,8 @@ public class GameRound {
 
 	public enum GameRoundState {
 		PICKING,
-		PLAYING
+		PLAYING,
+		OVER
 	}
 
 	private Game game;
@@ -135,7 +136,6 @@ public class GameRound {
 			setCurrentPlayer(null);
 		} else {
 			System.out.println(String.format("Go to player %d", game.getPlayerSlot(game.getNextPlayer(currentPlayer))));
-
 			setCurrentPlayer(game.getNextPlayer(currentPlayer));
 		}
 	}
@@ -171,7 +171,7 @@ public class GameRound {
 			setCurrentPlayer(winningPlayer);
 		} else {
 			System.out.println("Start new round...");
-
+			state = GameRoundState.OVER;
 			// Match's over
 			game.startNewRound();
 		}
@@ -185,6 +185,8 @@ public class GameRound {
 	}
 
 	public void demandReaction(HumanPlayer player) {
+		if(state == GameRoundState.OVER) return;
+
 		if(player.getUserId() == game.getCreator().getUserID()) {
 			if(currentPlayer == null)
 				showdown();
@@ -193,8 +195,9 @@ public class GameRound {
 		}
 	}
 
-	private void setCurrentPlayer(Player winningPlayer) {
-		currentPlayer = winningPlayer;
+	private void setCurrentPlayer(Player player) {
+		currentPlayer = player;
+//		player.react();
 //		winningPlayer.react();
 	}
 
