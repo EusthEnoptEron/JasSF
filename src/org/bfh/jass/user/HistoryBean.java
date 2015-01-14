@@ -11,11 +11,9 @@ import java.util.List;
 import org.bfh.jass.user.LoginBean;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.*;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
@@ -25,7 +23,7 @@ import java.io.IOException;
  * Manage class for a players match history
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class HistoryBean implements Serializable {
 	@ManagedProperty("#{loginBean}")
 	private LoginBean user;
