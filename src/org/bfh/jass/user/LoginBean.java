@@ -89,7 +89,6 @@ public class LoginBean implements Serializable {
 		System.out.println("login refused");
 		greeting="Login impossible (wrong username or Password)";
 		return "login?faces-redirect=true";
-		//if (name!=null && password!=null && name.equals("Emmanuel") && password.equals("Emmanuel"))
 
 	}
 	public String register(){
@@ -153,19 +152,6 @@ public class LoginBean implements Serializable {
 			}
 		}
 	}
-	
-	/*public void checkAuthorization(ComponentSystemEvent event)
-	{
-		if(!isLoggedIn())
-		{
-			try {
-				FacesContext.getCurrentInstance().getExternalContext()
-						.redirect("login.xhtml?faces-redirect=true");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}*/
 
 	public boolean isLoggedIn() {
 		return user != null;
