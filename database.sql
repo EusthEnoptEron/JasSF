@@ -36,7 +36,7 @@ DELETE FROM `games`;
 -- Dumping structure for table jass.teams
 DROP TABLE IF EXISTS `teams`;
 CREATE TABLE IF NOT EXISTS `teams` (
-  `id` int(10) NOT NULL,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `score` int(10) NOT NULL,
   `gameId` int(10) NOT NULL,
   PRIMARY KEY (`id`),
