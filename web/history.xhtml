@@ -45,9 +45,6 @@
             <ui:fragment rendered="#{not historyBean.hasScores()}">
                 <div class="alert alert-success">#{messages.historyNoGamesPlayedYet}</div>
             </ui:fragment>
-            <p:commandButton value="#{messages.overviewNewGame}" action="#{gameBean.startCreation}" ajax="false" icon="ui-icon-document">
-                <f:actionListener type="org.bfh.jass.game.GameExitEvent"/>
-            </p:commandButton>
         </h:form>
     </ui:define>
 </ui:composition>

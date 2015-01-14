@@ -25,22 +25,20 @@ public class Score {
 	
 	private String playerTeam;
 
-	protected Score(int gameID, int teamID, String gameName, int requiredScore, int score)
+	protected Score(int gameID, String gameName, int requiredScore)
 	{
 		this.gameID = gameID;
-		this.teamID = teamID;
 		this.requiredScore = requiredScore;
 		this.gameName = gameName;
-		this.score = score;
 		
-		if((teamID % 2)== 0)
+		/*if((teamID % 2)== 0)
 		{
 			playerTeam = "Team 1";
 		}
 		else
 		{
 			playerTeam = "Team 2";
-		}
+		}*/
 	}
 
 	public void setGameID(int gameID) {
@@ -111,6 +109,19 @@ public class Score {
 			return this.winner = "Team 1";
 		}
 		return this.winner = "Team 2";
+	}
+	
+	public void setPlayerTeam(int teamID)
+	{
+		if(this.teamID == teamID)
+		{
+			this.playerTeam = "Team 1";
+		}
+		else
+		{
+			this.playerTeam = "Team 2";
+		}
+		
 	}
 	
 	public void setPlayerTeam(String playerTeam)
