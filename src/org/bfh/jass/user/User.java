@@ -14,9 +14,7 @@ public class User {
 	int id;
 
 	String username;
-
 	String password;
-	String salt;
 
 	Date dateOfBirth;
 	private Set<Card> cards = new HashSet<Card>();

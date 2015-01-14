@@ -13,36 +13,36 @@
 		
             <h2>#{messages.historyTitle}</h2>
 
-			#{messages.historyGamesPlayed} #{historyBean.noOfGamesPlayed} <br/>
-			#{messages.historyWins} #{historyBean.wins} <br/>
-			#{messages.historyLosses} #{historyBean.losses} <br/>
-			#{messages.historyWinRatio} #{historyBean.winRatio} <br/>
+			#{messages.historyGamesPlayed} #{historyBean.history.noOfGamesPlayed} <br/>
+			#{messages.historyWins} #{historyBean.history.winCount} <br/>
+			#{messages.historyLosses} #{historyBean.history.lossCount} <br/>
+			#{messages.historyWinRatio} #{historyBean.history.winRatio} <br/>
 			
             <table class="table">
                 <thead>
                     <tr>
-                        <th>#{messages.historyGameName}</th>
-                        <th>#{messages.historyPlayerName}</th>
-                        <th>#{messages.historyPlayerScore}</th>
-                        <th>#{messages.historyMaxScore}</th>
+                        <th>#{messages.historyName}</th>
+						<th>#{messages.historyRequiredScore}</th>
+                        <th>#{messages.historyTeam1Name}</th>
+                        <th>#{messages.historyTeam2Name}</th>
+						<th>#{messages.historyPlayerIsInTeam}</th>
+						<th>#{messages.historyWinner}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="#{history.games}" var="game">
+                    <c:forEach items="#{historyBean.scores}" var="score">
                         <tr>
-                            <td>#{game.playerCount}/4</td>
-                            <td>
-                                <h:commandLink value="#{game.title}" action="#{gameBean.join(game)}" />
-                            </td>
-                            <td>
-                                #{game.score}
-                            </td>
-                            <td>#{game.creator.username}</td>
+                            <td>#{score.gameName}</td>
+                            <td>#{score.requiredScore}</td>
+                            <td>#{score.score}</td>
+                            <td>#{score.score2}</td>
+							<td>#{score.playerTeam}</td>
+							<td>#{score.winner}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
-            <ui:fragment rendered="#{not historyBean.hasGames()}">
+            <ui:fragment rendered="#{not historyBean.hasScores()}">
                 <div class="alert alert-success">#{messages.historyNoGamesPlayedYet}</div>
             </ui:fragment>
             <p:commandButton value="#{messages.overviewNewGame}" action="#{gameBean.startCreation}" ajax="false" icon="ui-icon-document">
