@@ -25,10 +25,10 @@
 
             <j:modal title="Game Over" rendered="#{gameBean.over}">
                 <h2 class="modal-body" id="closing-modal">
-                    <h:outputText value="#{messages.gamePlayerWon}">
+                    <h:outputFormat value="#{messages.gamePlayerWon}">
                         <f:param value="#{gameBean.winner1.name}" />
                         <f:param value="#{gameBean.winner2.name}" />
-                    </h:outputText>
+                    </h:outputFormat>
                 </h2>
                 <div class="modal-footer">
                     <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
