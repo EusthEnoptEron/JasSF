@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
     <title>#{messages.registerTitle}</title>
@@ -15,8 +15,13 @@
             #{messages.registerUsername} <h:inputText id="username"
                                                       value="#{loginBean.name}"/><br/>
             #{messages.registerPassword} <h:inputSecret id="password" value="#{loginBean.password}"/>
-            #{messages.registerDate} <t:inputDate id="date"
-                                                  value="#{loginBean.dateOfBirth}" popupCalendar="true"/>
+            #{messages.registerDate} <p:calendar id="popup" pattern="dd.MM.yyyy" locale="#{localeBean.language}" value="#{loginBean.dateOfBirth}" />
+
+            <!--<h:outputText value="#{loginBean.dateOfBirth}">-->
+                <!--<f:convertDateTime locale="#{localeBean.locale}" />-->
+                <!--&lt;!&ndash;&ndash;&gt;-->
+            <!--</h:outputText>-->
+
             <h:commandButton id="modifyBtn" action="#{loginBean.modify}"
                              value="#{messages.registerValidate}">
 
