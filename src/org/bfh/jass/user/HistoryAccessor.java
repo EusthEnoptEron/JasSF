@@ -24,11 +24,8 @@ public class HistoryAccessor {
 
 	Connection conn = null;
 
-	Map<Integer, ArrayList<Score>> scoreMap;
-
 	private HistoryAccessor() {
 		conn = DatabaseManager.getConnection();
-		scoreMap = new HashMap<Integer, ArrayList<Score>>();
 	}
 
 	public static HistoryAccessor getCurrentInstance() {
@@ -44,43 +41,40 @@ public class HistoryAccessor {
 	 * @return user object
 	 */
 	public ArrayList<Score> getScores(int userId) {
-		if (scoreMap.containsKey(userId))
-		{
-			return scoreMap.get(userId);
-		} else {
-			ArrayList<Score> scores = null;
-			try {
-				scores = accessScores(userId);
-			} catch (SQLException e) {
-			}
-			if (scores != null) {
-				scoreMap.put(userId, scores);
-			}
-			return scores;
+		ArrayList<Score> scores = null;
+		try {
+			scores = accessScores(userId);
+		} catch (SQLException e) {
+			System.err.println("Query failed: " + e.getMessage());
 		}
-
+		return scores;
 	}
 
 	
 	private ArrayList<Score> accessScores(int userId) throws SQLException {
-		Statement s = conn.createStatement();
-		
-		s.executeQuery("SELECT name, teamId, gameId, score, requiredScore FROM games JOIN teams ON (games.id = gameId) JOIN teams_users ON teams.id = teamId WHERE teams_users.userId = " + userId);
-				
-		ResultSet rs = s.getResultSet();
+		PreparedStatement s = conn.prepareStatement(
+				"SELECT name, teamId, gameId, score, requiredScore " +
+						"FROM games " +
+						"   JOIN teams ON (games.id = gameId) " +
+						"   JOIN teams_users ON teams.id = teamId " +
+						"WHERE teams_users.userId = ?"
+		);
+
+		s.setInt(1, userId);
+
+		ResultSet rs = s.executeQuery();
+
 		int count = 0, winCount = 0, lossCount = 0;
 		ArrayList<Score> res = new ArrayList<>();
 		
 		int teamID = 0;
 		int gameID = 0;
 		while (rs.next()) {
-			
 			String name = rs.getString("name");
 			teamID = rs.getInt("teamId");
 			gameID = rs.getInt("gameId");
 			int score = rs.getInt("score");
 			int requiredScore = rs.getInt("requiredScore");
-			
 
 			++count;
 			res.add(new Score(gameID, teamID, name, requiredScore, score));
@@ -88,22 +82,27 @@ public class HistoryAccessor {
 			
 			System.out.println(
 					"teamid = " + teamID
-							+ ", name = " + name
-							+ ", score = " + score
-							+ ", reqscore = " + requiredScore
-							+ ", gameid = " + gameID);
+				+ ", name = " + name
+				+ ", score = " + score
+				+ ", reqscore = " + requiredScore
+				+ ", gameid = " + gameID);
 			
 		}
 		System.out.println(count + " rows were retrieved");
-		
-		
-		//s.executeQuery("SELECT teams.Id, score FROM games JOIN teams ON (teams.gameId = games.id) WHERE NOT teams.Id = " + teamID + "AND games.id = " + gameID);
-		
+
+		PreparedStatement getOtherTeam = conn.prepareStatement("SELECT teams.Id as teamId, score " +
+				"FROM games " +
+				"JOIN teams ON (teams.gameId = games.id) " +
+				"WHERE teams.Id != ? AND games.id = ?");
+
+		getOtherTeam.setInt(1, teamID);
+		getOtherTeam.setInt(2, gameID);
+
 		int count2 = 0;
 		int teamID2 = 0;
 		int score2 = 200;
 		
-		rs = s.getResultSet();
+		rs = getOtherTeam.executeQuery();
 		while(rs.next())
 		{
 			teamID2 = rs.getInt("teamId");
@@ -111,7 +110,7 @@ public class HistoryAccessor {
 			
 			System.out.println(
 					"teamid2 = " + teamID2
-							+ ", score2 = " + score2);
+					+ ", score2 = " + score2);
 			
 			count2++;
 		}
@@ -126,6 +125,5 @@ public class HistoryAccessor {
 		s.close();
 		System.out.println(count2 + " rows were retrieved");
 		return res;
-
 	}
 }
