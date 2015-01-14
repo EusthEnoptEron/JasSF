@@ -19,9 +19,6 @@ public class User {
 	String salt;
 
 	Date dateOfBirth;
-	private Set<Card> cards = new HashSet<Card>();
-	private Game.Team team;
-
 	protected User(int id, String u, String p, Date d) {
 		this.id = id;
 		username = u;
@@ -81,36 +78,6 @@ public class User {
 	public void commitChanges() {
 		UserAccessor.getCurrentInstance().commitUser(this);
 	}
-
-
-	public void setCards(Card[] cards) {
-		this.cards.clear();
-		for(Card card: cards) {
-			this.cards.add(card);
-		}
-
-	}
-
-	public Card[] getCards() {
-		return cards.toArray(new Card[cards.size()]);
-	}
-
-	public boolean hasCard(Card card) {
-		return cards.contains(card);
-	}
-
-	public void removeCard(Card card) {
-		cards.remove(card);
-	}
-
-	public Game.Team getTeam() {
-		return team;
-	}
-
-	public void setTeam(Game.Team team) {
-		this.team = team;
-	}
-
 
 	@Override
 	public boolean equals(Object o) {

@@ -8,6 +8,7 @@ import java.util.*;
 
 /**
  * Represents a game round of 9 steps that starts with picking a trump and ends when all cards have been played.
+ * This instance will be controlled by beans.
  */
 public class GameRound {
 
