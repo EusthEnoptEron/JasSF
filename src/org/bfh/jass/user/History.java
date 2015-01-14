@@ -21,6 +21,25 @@ public class History {
 
 	private History() {
 		scores = new ArrayList<Score>();
+		
+	}
+	
+	public void calculateWins()
+	{
+		int wins = 0;
+		for(Score score : scores)
+		{
+			if(score.getWinner().equals(score.getPlayerTeam()))
+			{
+				wins++;
+			}
+		}
+		
+		this.winCount = wins;
+		this.lossCount = scores.size() - this.winCount;
+		
+		calculateWinRatio();
+		calculateNoOfGamesPlayed();
 	}
 
 	public void setWinCount(int winCount)
@@ -49,7 +68,7 @@ public class History {
 	
 	public void calculateNoOfGamesPlayed()
 	{
-		this.noOfGamesPlayed = winCount + lossCount;
+		this.noOfGamesPlayed = this.winCount + this.lossCount;
 	}
 	
 	public int getNoOfGamesPlayed()
@@ -89,7 +108,8 @@ public class History {
 	 * @return
 	 */
 	public Score[] getScoresByUser(User user) {
-		List<Score> list = HistoryAccessor.getCurrentInstance().getScores(user.getUserID());
-		return list.toArray(new Score[list.size()]);
+		this.scores = HistoryAccessor.getCurrentInstance().getScores(user.getUserID());
+		calculateWins();
+		return this.scores.toArray(new Score[scores.size()]);
 	}
 }

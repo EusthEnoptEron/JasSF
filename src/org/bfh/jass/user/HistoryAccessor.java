@@ -94,13 +94,14 @@ public class HistoryAccessor {
 							+ ", gameid = " + gameID);
 			
 		}
+		System.out.println(count + " rows were retrieved");
 		
 		
-		s.executeQuery("SELECT teams.Id, score FROM games JOIN teams ON (teams.gameId = games.id) WHERE NOT teams.Id = " + teamID + "AND games.id = " + gameID);
+		//s.executeQuery("SELECT teams.Id, score FROM games JOIN teams ON (teams.gameId = games.id) WHERE NOT teams.Id = " + teamID + "AND games.id = " + gameID);
 		
 		int count2 = 0;
 		int teamID2 = 0;
-		int score2 = 0;
+		int score2 = 200;
 		
 		rs = s.getResultSet();
 		while(rs.next())
@@ -123,7 +124,7 @@ public class HistoryAccessor {
 		
 		rs.close();
 		s.close();
-		System.out.println(count + " rows were retrieved");
+		System.out.println(count2 + " rows were retrieved");
 		return res;
 
 	}
