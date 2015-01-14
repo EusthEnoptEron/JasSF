@@ -12,15 +12,15 @@
         <h:form id="lobbyForm">
             <h2>Lobby: #{gameBean.title}</h2>
             <div class="alert alert-info">
-                Waiting for players to join.
+                #{messages.gameWaiting}
                 <ui:fragment rendered="#{gameBean.creator}">
-                    You can start the game anytime by pressing <i>Start Game</i>.
+                    #{messages.gameStartMessage}
                 </ui:fragment>
             </div>
             <p:panelGrid>
                 <p:row>
-                    <p:column colspan="2">Team Even</p:column>
-                    <p:column colspan="2">Team Odd</p:column>
+                    <p:column colspan="2">Team 1</p:column>
+                    <p:column colspan="2">Team 2</p:column>
                 </p:row>
                 <p:row>
                     <p:column>1</p:column>
@@ -49,7 +49,7 @@
             </p:panelGrid>
             <p:poll interval="1" update="lobbyForm" listener="#{gameBean.checkForStart}" />
             <br />
-            <p:commandButton ajax="false" rendered="#{gameBean.creator}" action="#{gameBean.start}" value="Start Game" />
+            <p:commandButton ajax="false" rendered="#{gameBean.creator}" action="#{gameBean.start}" value="#{messages.gameStartButton}" />
         </h:form>
     </ui:define>
 </ui:composition>
