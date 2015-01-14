@@ -126,7 +126,7 @@ public class HistoryBean implements Serializable {
 	}
 	
 	/**
-	 * Gets the instance of the manager.
+	 * Gets the instance of the bean.
 	 * @return
 	 */
 	public static HistoryBean getInstance() {
