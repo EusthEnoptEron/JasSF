@@ -120,6 +120,11 @@ public class GameBean implements Serializable {
 		}
 	}
 
+	public boolean isRunning() {
+		return game != null &&
+				game.getState() == Game.GameState.PLAYING;
+	}
+
 	public boolean mustPickTrump() {
 		return game.getRound().getState() == GameRound.GameRoundState.PICKING
 				&& game.getRound().getCurrentPlayer() == player;

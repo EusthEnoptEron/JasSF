@@ -36,6 +36,9 @@
                     <ui:fragment rendered="#{loginBean.loggedIn}">
                         <li class="#{view.viewId == '/overview.xhtml' ? 'active' : ''}"><h:outputLink value="overview.xhtml">#{messages.overviewTitle}</h:outputLink></li>
                         <li class="#{view.viewId == '/modify.xhtml' ? 'active' : ''}"><h:outputLink value="modify.xhtml">Profile</h:outputLink></li>
+                        <ui:fragment rendered="#{gameBean.running}">
+                            <li class="#{view.viewId == '/game.xhtml' ? 'active' : ''}"><h:outputLink value="game.xhtml">#{messages.currentGameTitle}</h:outputLink></li>
+                        </ui:fragment>
                         <li>
                             <h:commandLink action="login?faces-redirect=true" value="Logout">
                                 <f:actionListener type="org.bfh.jass.user.LogoutActionEvent"/>
