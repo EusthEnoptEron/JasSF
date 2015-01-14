@@ -21,6 +21,8 @@ public class Score {
 	private int score;
 	private int score2;
 	
+	private String winner;
+	
 	private String playerTeam;
 
 	protected Score(int gameID, int teamID, String gameName, int requiredScore, int score)
@@ -30,7 +32,6 @@ public class Score {
 		this.requiredScore = requiredScore;
 		this.gameName = gameName;
 		this.score = score;
-		
 		
 		if((teamID % 2)== 0)
 		{
@@ -96,6 +97,20 @@ public class Score {
 
 	public int getScore2() {
 		return this.score2;
+	}
+	
+	public void setWinner(String winner)
+	{
+		this.winner = winner;
+	}
+	
+	public String getWinner()
+	{
+		if(score > score2)
+		{
+			return this.winner = "Team 1";
+		}
+		return this.winner = "Team 2";
 	}
 	
 	public void setPlayerTeam(String playerTeam)

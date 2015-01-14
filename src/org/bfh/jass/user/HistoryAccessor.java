@@ -64,7 +64,6 @@ public class HistoryAccessor {
 	
 	private ArrayList<Score> accessScores(int userId) throws SQLException {
 		Statement s = conn.createStatement();
-		Statement s2 = conn.createStatement();
 		
 		s.executeQuery("SELECT name, teamId, gameId, score, requiredScore FROM games JOIN teams ON (games.id = gameId) JOIN teams_users ON teams.id = teamId WHERE teams_users.userId = " + userId);
 				
@@ -95,19 +94,19 @@ public class HistoryAccessor {
 							+ ", gameid = " + gameID);
 			
 		}
-		rs.close();
-		s.close();
 		
-		s2.execute("SELECT teamId, score FROM games JOIN teams ON (games.id = " + gameID + ") WHERE NOT teams.Id = " + teamID);
 		
-		ResultSet rs2 = s2.getResultSet();
+		s.executeQuery("SELECT teams.Id, score FROM games JOIN teams ON (teams.gameId = games.id) WHERE NOT teams.Id = " + teamID + "AND games.id = " + gameID);
+		
 		int count2 = 0;
 		int teamID2 = 0;
 		int score2 = 0;
-		while(rs2.next())
+		
+		rs = s.getResultSet();
+		while(rs.next())
 		{
-			teamID2 = rs2.getInt("teamId");
-			score2 = rs2.getInt("score");
+			teamID2 = rs.getInt("teamId");
+			score2 = rs.getInt("score");
 			
 			System.out.println(
 					"teamid2 = " + teamID2
@@ -122,9 +121,8 @@ public class HistoryAccessor {
 			ress.setScore2(score2);
 		}
 		
-		
-		rs2.close();
-		s2.close();
+		rs.close();
+		s.close();
 		System.out.println(count + " rows were retrieved");
 		return res;
 
