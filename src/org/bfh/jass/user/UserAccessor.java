@@ -67,14 +67,12 @@ public class UserAccessor {
 
 
 				String sql = "INSERT INTO `user` (`id` ,`username` ,`password` ,`dateofbirth` ) VALUES (NULL , ?, ?, ?)";
-				//String sql = "INSERT INTO `user` (`id` ,`username` ,`password` )VALUES (NULL , ?, ?)";
 
 				s = conn.prepareStatement(sql);
 				s.setString(1, username);
 				s.setString(2, Encryptor.createHash(password));
 								
 				java.sql.Date sqlDate = new java.sql.Date(dateOfBirth.getTime());
-				//String myString = DateFormat.getDateInstance(DateFormat.SHORT).format(dateOfBirth);
 
 
 				s.setDate(3, sqlDate);

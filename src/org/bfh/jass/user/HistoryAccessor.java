@@ -36,9 +36,9 @@ public class HistoryAccessor {
 	}
 
 	/**
-	 * Gets a username from the database.
-	 * @param username name of the user
-	 * @return user object
+	 * Gets scores from the database.
+	 * @param userId ID of the user
+	 * @return ArrayList<Score> object
 	 */
 	public ArrayList<Score> getScores(int userId) {
 		ArrayList<Score> scores = null;
@@ -51,10 +51,17 @@ public class HistoryAccessor {
 	}
 
 	
+	/**
+	 * Gets all the game data of one player
+	 * @param userId ID of the user
+	 * @return ArrayList<Score> object
+	 */
 	private ArrayList<Score> accessScores(int userId) throws SQLException {
 		
 		try
 		{
+			
+			// Get the games and required score for the games in which the player has participated
 		PreparedStatement s = conn.prepareStatement(
 				"SELECT name, gameId, requiredScore " +
 						"FROM games " +
@@ -89,6 +96,9 @@ public class HistoryAccessor {
 		}
 		System.out.println(count + " rows were retrieved");
 		
+		
+		// Get the teams and scores for each game the user participated in
+		
 		for(int i = 0; i < res.size(); i++)
 		{
 			PreparedStatement getTeams = conn.prepareStatement("SELECT teams.Id as teamId, score " +
@@ -120,6 +130,9 @@ public class HistoryAccessor {
 			res.get(i).setTeamID2(teamID[1]);
 			res.get(i).setScore(score[0]);
 			res.get(i).setScore2(score[1]);
+			
+			
+			// Get the team where the player was in
 			
 			PreparedStatement getPlayerTeam = conn.prepareStatement(
 					"SELECT teams.Id as teamId " +

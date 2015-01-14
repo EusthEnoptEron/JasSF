@@ -108,6 +108,10 @@ public class Score {
 		{
 			return this.winner = "Team 1";
 		}
+		else if(score == score2)
+		{
+			return this.winner = "Tie";
+		}
 		return this.winner = "Team 2";
 	}
 	
