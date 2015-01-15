@@ -4,7 +4,7 @@ import org.bfh.jass.user.User;
 import org.bfh.jass.user.UserAccessor;
 
 /**
- * Created by Simon on 2014/12/04.
+ * Represents a human player that can interact with the game.
  */
 public class HumanPlayer extends Player {
 	private int userId;
@@ -30,6 +30,9 @@ public class HumanPlayer extends Player {
 		return user;
 	}
 
+	/**
+	 * Implementation of react method. Doesn't actually do anything.
+	 */
 	@Override
 	public void react() {
 

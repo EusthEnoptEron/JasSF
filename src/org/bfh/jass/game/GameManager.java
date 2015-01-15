@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Manage class that manages the games currently running.
+ * Manager class that manages the games currently running.
  */
 public class GameManager {
 	private static GameManager _instance = null;
@@ -84,7 +84,7 @@ public class GameManager {
 	}
 
 	/**
-	 * Closes a game.
+	 * Closes a game and saves it if need be.
 	 * @param game
 	 */
 	public void closeGame(Game game) {

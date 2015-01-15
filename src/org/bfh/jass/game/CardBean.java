@@ -4,7 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bfh.jass.user.LoginBean;
 
 /**
- * Created by Simon on 2014/12/11.
+ * GUI glue for cards
  */
 public class CardBean {
 	private Card card;

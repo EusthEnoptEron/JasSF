@@ -3,9 +3,7 @@ package org.bfh.jass.game;
 import org.bfh.jass.user.User;
 
 /**
- * User: Simon
- * Date: 18.12.2014
- * Time: 10:32
+ * Represents the result of a game.
  */
 public class GameResult {
 
@@ -27,6 +25,10 @@ public class GameResult {
 		return teams;
 	}
 
+	/**
+	 * Gets the winner team.
+	 * @return
+	 */
 	public Team getWinningTeam() {
 		Team winner = null;
 		for(Team team: teams) {

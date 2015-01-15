@@ -30,12 +30,17 @@ public class GameAccessor {
 		return null;
 	}
 
+	/**
+	 * Saves the game.
+	 * @param game
+	 */
 	public void saveGame(Game game)  {
 		GameResult result = game.getResult();
 		try {
 			try {
 				int gameId;
 
+				// We're good boys. We'll use a transaction.
 				conn.setAutoCommit(false);
 				PreparedStatement insertGameStatement = conn.prepareStatement("INSERT INTO games (`name`, `creatorId`, `requiredScore`) VALUES(?, ?, ?)",
 						Statement.RETURN_GENERATED_KEYS);
@@ -54,6 +59,7 @@ public class GameAccessor {
 				}
 				System.out.println("id: " + gameId);
 
+				// Prepare statements that we'll reuse.
 				PreparedStatement insertTeamStatement = conn.prepareStatement("INSERT INTO teams (`score`, `gameId`) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
 				PreparedStatement insertTeamPlayer = conn.prepareStatement("INSERT INTO teams_users (`userId`, `teamId`) VALUES (?, ?)");
 

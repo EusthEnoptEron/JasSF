@@ -9,7 +9,7 @@ import javax.faces.event.ActionListener;
 import javax.servlet.http.HttpSession;
 
 /**
- * Created by Simon on 2014/12/15.
+ * Event handler that removes the player from his current game.
  */
 public class GameExitEvent implements ActionListener {
 
